@@ -13,7 +13,6 @@ const LOG_LEVEL_INFO = 1000
 
 
 
-
 /**
  * 変数
  *
@@ -32,25 +31,25 @@ var Log_file_path = '';
 
 
 
+
+
+///////////////////////////////////////////////////////////
+//  ログ
+///////////////////////////////////////////////////////////
+
+/**
+ * ログファイルPATH構築
+ * 
+ * @return void
+ */
 function log_file_path_create(){
   shell = new ActiveXObject('WScript.Shell')
-  env = shell.Environment('TEMP')
-
-
-
-temp_path = 
-
-
+  env = shell.Environment('SYSTEM')
+  temp_path = env('TEMP')
 
   //ログファイルパス構築
-  Log_file_path = temp + '\' + Log_file_path
+  Log_file_path = temp_path + '\' + Log_file_path
 }
-
-
-
-
-
-
 
 /**
  * ログ出力
@@ -61,15 +60,20 @@ temp_path =
  */
 function log_write(message, level)
 {
-  var static fso
+  var static fso, logger
 
   if (!fso) {
     fso = new ActiveXObject("Scripting.FileSystemObject")
+    logger = fso.OpenTextFile(Log_file_path)
   }
+  
+  level_string = 
 
-  fso.OpenTextFile
 
 
+
+
+}
 
 
 
