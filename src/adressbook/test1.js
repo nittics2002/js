@@ -5,11 +5,6 @@
  *
  */
 
-//エラーレベル
-const LOG_LEVEL_ERROR = 1
-const LOG_LEVEL_WARNING = 10
-const LOG_LEVEL_NOTICE = 100
-const LOG_LEVEL_INFO = 1000
 
 
 
@@ -19,8 +14,9 @@ const LOG_LEVEL_INFO = 1000
  *
  */
 
-//ログファイルパス
-var Log_file_path = '';
+
+
+
 
 
 /**
@@ -38,44 +34,64 @@ var Log_file_path = '';
 ///////////////////////////////////////////////////////////
 
 /**
- * ログファイルPATH構築
+ * ログ出力
  * 
+ * @oaram string message メッセージ
  * @return void
  */
-function log_file_path_create(){
-  shell = new ActiveXObject('WScript.Shell')
-  env = shell.Environment('SYSTEM')
-  temp_path = env('TEMP')
+function log_write(message)
+{
+  static fso
 
-  //ログファイルパス構築
-  Log_file_path = temp_path + '\' + Log_file_path
+  if (!fso) {
+    fso = new ActiveXObject("Scripting.FileSystemObject")
+  }
+  
+  dt = new Date()
+
+  logger = fso.OpenTextFile(log_get_file_path(), 8)
+  logger.WriteLine(dt.toISOString() + ':' + message)
+  logger.close()
+}
+
+/**
+ * ログファイルPATH構築
+ * 
+ * @return string
+ */
+function log_get_file_path(){
+  static log_file_path
+
+  if (!log_file_path) {
+    shell = new ActiveXObject('WScript.Shell')
+    env = shell.Environment('SYSTEM')
+    temp_path = env('TEMP')
+    log_file_path = temp_path + '\' + Log_file_path
+  }
+  return log_file_path
+}
+
+/**
+ * エラーログ出力
+ * 
+ * @oaram string message メッセージ
+ * @return void
+ */
+function log_write_error(message)
+{
+  log_write('ERROR:' + message)
 }
 
 /**
  * ログ出力
  * 
  * @oaram string message メッセージ
- * @param int level ログレベル
  * @return void
  */
-function log_write(message, level)
+function log_write_info(message)
 {
-  var static fso, logger
-
-  if (!fso) {
-    fso = new ActiveXObject("Scripting.FileSystemObject")
-    logger = fso.OpenTextFile(Log_file_path)
-  }
-  
-  level_string = 
-
-
-
-
-
+  log_write('INFO:' + message)
 }
-
-
 
 
 
