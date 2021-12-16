@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>サイトからファイルリンクアクセス</title>
+
+<style>
+
+
+
+
+
+</style>
+
+</head>
+<body>
+
+<main id="contents">
+
+<article id="article_main">
+    <h1>ファイル/フォルダへのアクセス</h1>
+    
+    
+    
+</article>
+
+<nav id="nav_main">
+    <ul>
+        <li><a id="file_path" href="" target="_blank">ここをクリックするとファイルパスにアクセスします</a></li>
+    </ul>
+</nav>
+
+</main>
+
+<script>
+
+//https://qiita.com/EZ_Denta/items/e485207daaba68c52550#getname
+
+(() => {
+    window.addEventListener('load', (event) => {
+        const url = new URL(window.location.href)
+        const href = url.searchParams.get('path') || ''
+        const message = href?
+            'ここをクリックするとファイルパスにアクセスします':
+            'ファイルパスの取得を失敗しました'
+        
+        
+        
+        //console.log("BBBBBBB")
+        console.log(url)
+        console.log(href)
+        console.log(message)
+        
+    },false)
+})()
+
+</script>
+
+</body>
+</html>

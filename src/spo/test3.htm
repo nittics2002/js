@@ -41,7 +41,7 @@ ul {
     
 </article>
 
-<form name="form_main" action="" method="GET" target="_blank">
+<form name="form_main" action="" method="GET" target="_self">
 </form>
 
 <nav id="nav_main">
@@ -59,39 +59,32 @@ ul {
 (() => {
     window.addEventListener('load', (event) => {
         const url = new URL(window.location.href)
-        
-        const original_href = url.searchParams.get('path') || ''
-        //const href = 'file:///' + original_href.replaceAll('\\', '/')
-        const href = 'http:///' + original_href.replaceAll('\\', '/')
-        
+        const href = url.searchParams.get('path') || ''
         const message = href?
-            '取得したファイルパス＝' + original_href :
+            '取得したファイルパス＝' + href :
             'ファイルパスの取得を失敗しました'
         
         const elm_form = document.querySelector('form[name="form_main"]')
         elm_form.action = href
         
-        const elm_message = document.querySelector(
-            '#article_main_messages>li:first-child'
-            )
+        const elm_message = document.querySelector('#article_main_messages>li:first-child')
         elm_message.textContent = message
         
         const elm_anchor = document.querySelector('#file_path')
         elm_anchor.href = href
         
-        if (original_href) {
+        if (href) {
             //elm_message.classList.add('utl_color_info')
         } else {
             elm_message.classList.add('utl_color_error')
             elm_anchor.classList.add('utl_display_none')
         }
         
-        document.form_main.submit()
         
-        
-        
-        
-        
+        //console.log("BBBBBBB")
+        console.log(url)
+        console.log(href)
+        console.log(message)
         
     },false)
 })()
