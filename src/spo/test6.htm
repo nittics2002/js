@@ -61,7 +61,8 @@ ul {
         const url = new URL(window.location.href)
         
         const original_href = url.searchParams.get('path') || ''
-        const href = 'file:///' + original_href.replaceAll('\\', '/')
+        //const href = 'file:///' + original_href.replaceAll('\\', '/')
+        const href = 'http:///' + original_href.replaceAll('\\', '/')
         
         const message = href?
             '取得したファイルパス＝' + original_href :

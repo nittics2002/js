@@ -47,21 +47,49 @@ ul {
     </ul>
 </nav>
 
-<form name="form_main" action="" method="GET" target="_blank">
+<form name="form_main" action="" method="GET" target="_self">
 </form>
 
 </main>
 
 <script>
 
-//https://qiita.com/EZ_Denta/items/e485207daaba68c52550#getname
-
-(() => {
+(function() {
     window.addEventListener('load', (event) => {
-        const url = new URL(window.location.href)
+        const query_string = decodeURI(window.location.search) || ''
         
-        const original_href = url.searchParams.get('path') || ''
-        const href = 'file:///' + original_href.replaceAll('\\', '/')
+        const original_href = (function(queries) {
+            if (
+                queries == '' ||
+                queries.slice(0,1) != '?'
+            ) {
+                return ''
+            }
+            
+            const exploded = queries.slice(1)
+                .split('&')
+            
+            //return [key,value]
+            const key_values = exploded.map(function(param) {
+                const exploded = param.split('=')
+                return exploded.length == 2?
+                    exploded:
+                    ['', '']
+                },exploded)
+            
+            for (let i = 0; i < key_values.length; i++) {
+                if (key_values[i][0] == 'path') {
+                    return key_values[i][1]
+                }
+            }
+            
+            return ''
+                
+            })(query_string)
+        
+        const href = original_href == ''?
+            '':
+            'file:///' + original_href.replaceAll('\\', '/')
         
         const message = href?
             '取得したファイルパス＝' + original_href :
@@ -78,11 +106,10 @@ ul {
         const elm_anchor = document.querySelector('#file_path')
         elm_anchor.href = href
         
-        if (original_href) {
-            //elm_message.classList.add('utl_color_info')
-        } else {
+        if (! original_href) {
             elm_message.classList.add('utl_color_error')
             elm_anchor.classList.add('utl_display_none')
+            return
         }
         
         document.form_main.submit()

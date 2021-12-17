@@ -50,7 +50,7 @@ ul {
 <form name="form_main" action="" method="GET" target="_blank">
 </form>
 
-<iframe name="iframe_main" src="" sandbox="allow-downloads,allow-same-origin">
+<iframe name="iframe_main" src="" sandbox="allow-downloads allow-same-origin">
 </iframe>
 
 </main>
@@ -59,7 +59,7 @@ ul {
 
 //https://qiita.com/EZ_Denta/items/e485207daaba68c52550#getname
 
-(() => {
+(function() => {
     window.addEventListener('load', (event) => {
         const url = new URL(window.location.href)
         
@@ -117,7 +117,7 @@ ul {
         //)
         
         
-        console.log(elm_child_window)
+        //console.log(elm_child_window)
         
         
         //window.setTimeout(
