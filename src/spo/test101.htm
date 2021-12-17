@@ -43,7 +43,7 @@ ul {
 
 <nav id="nav_main">
     <ul>
-        <li><a id="file_path" href="" target="_blank">ここをクリックするとファイルパスにアクセスします</a></li>
+        <li><a id="file_path" href="" target="_self">ここをクリックするとファイルパスにアクセスします</a></li>
     </ul>
 </nav>
 
@@ -93,7 +93,7 @@ ul {
         
         const message = href?
             '取得したファイルパス＝' + original_href :
-            'ファイルパスの取得を失敗しました'
+            'ファイルパスの取得を失敗しました( ' + query_string + ' )'
         
         const elm_form = document.querySelector('form[name="form_main"]')
         elm_form.action = href
@@ -113,12 +113,6 @@ ul {
         }
         
         document.form_main.submit()
-        
-        
-        
-        
-        
-        
     },false)
 })()
 
