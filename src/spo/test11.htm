@@ -41,17 +41,14 @@ ul {
     
 </article>
 
+<form name="form_main" action="" method="GET" target="_blank">
+</form>
+
 <nav id="nav_main">
     <ul>
         <li><a id="file_path" href="" target="_blank">ここをクリックするとファイルパスにアクセスします</a></li>
     </ul>
 </nav>
-
-<form name="form_main" action="" method="GET" target="_blank">
-</form>
-
-<iframe name="iframe_main" src="" sandbox="allow-downloads,allow-same-origin">
-</iframe>
 
 </main>
 
@@ -67,8 +64,7 @@ ul {
         
 //仮処置
         //const href = 'file:///' + original_href.replaceAll('\\', '/')
-        const href = 'https://duckduckgo.com/'
-        //const href = 'http://localhost:8080/test2.htm'
+        const href = 'http:///' + original_href.replaceAll('\\', '/')
         
         
         
@@ -94,36 +90,29 @@ ul {
             elm_anchor.classList.add('utl_display_none')
         }
         
-        
-        const elm_iframe = document.querySelector('iframe[name="iframe_main"]')
-        elm_iframe.src = href
-        
-        
-        
-        
 //仮処置
         //document.form_main.submit()
         
         
-        //const elm_child_window = window.open(
-            //href,
-            //'fileOpenerWindow',
-            //[
-                //'left=100',
-                //'top=100',
-                //'width=100',
-                //'height=100',
-            //].join(',')
-        //)
+        const elm_child_window = window.open(
+            href,
+            'fileOpenerWindow',
+            [
+                'left=100',
+                'top=100',
+                'width=100',
+                'height=100',
+            ].join(',')
+        )
         
         
         console.log(elm_child_window)
         
         
-        //window.setTimeout(
-            //() => elm_child_window.close(),
-            //3000
-            //)
+        window.setTimeout(
+            () => elm_child_window.close(),
+            3000
+            )
         
         
         
