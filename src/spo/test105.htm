@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>ファイルリンクリダイレクト</title>
+<title>サイトからファイルリンクアクセス</title>
 
 <style>
 
@@ -33,14 +33,12 @@ ul {
 <main id="contents">
 
 <article id="article_main">
-    <h1>ファイル/フォルダへのリダイレクト</h1>
-    
-    <p>本ページはクエリ文字?path=\\foo\bar\baz.hogeへリダイレクトする</p>
+    <h1>ファイル/フォルダへのアクセス</h1>
     
     <ul id="article_main_messages">
         <li></li>
     </ul>
-
+    
 </article>
 
 <nav id="nav_main">
@@ -56,45 +54,64 @@ ul {
 
 <script>
 
-/*
-*   クエリ文字?path=\\foo\bar\baz.hogeへリダイレクトする
-*/
 (function() {
-    const QUERY_STRING_KEY = 'path'
-
     window.addEventListener('load', (event) => {
         const query_string = decodeURI(window.location.search) || ''
-        const fixed_string = '?' + QUERY_STRING_KEY + '='
-
-        const original_href = query_string.slice(
-            fixed_string.length
-            )
-
+        
+        const original_href = (function(queries) {
+            if (
+                queries == '' ||
+                queries.slice(0,1) != '?'
+            ) {
+                return ''
+            }
+            
+            const exploded = queries.slice(1)
+                .split('&')
+            
+            //return [key,value]
+            const key_values = exploded.map(function(param) {
+                const exploded = param.split('=')
+                return exploded.length == 2?
+                    exploded:
+                    ['', '']
+                },exploded)
+            
+            for (let i = 0; i < key_values.length; i++) {
+                if (key_values[i][0] == 'path') {
+                    return key_values[i][1]
+                }
+            }
+            
+            return ''
+                
+            })(query_string)
+        
         const href = original_href == ''?
             '':
             'file:///' + original_href.replaceAll('\\', '/')
-
+        
         const message = href?
             '取得したファイルパス＝' + original_href :
             'ファイルパスの取得を失敗しました( ' + query_string + ' )'
-
+        
         const elm_form = document.querySelector('form[name="form_main"]')
         elm_form.action = href
-
+        
         const elm_message = document.querySelector(
             '#article_main_messages>li:first-child'
             )
         elm_message.textContent = message
-
+        
         const elm_anchor = document.querySelector('#file_path')
         elm_anchor.href = href
-
+        
         if (! original_href) {
             elm_message.classList.add('utl_color_error')
             elm_anchor.classList.add('utl_display_none')
             return
         }
-
+        
         document.form_main.submit()
     },false)
 })()
