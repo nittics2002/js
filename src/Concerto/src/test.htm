@@ -2,9 +2,21 @@
 <html lang="ja">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/ja.min.js"></script>
+
+
+    <script defer src="js/concerto_select2.js"></script>
+
+    
 	<title></title>
 </head>
 <body>
@@ -16,35 +28,39 @@
 <!--
 	共通
 -->
-		<div class="o-container">
-			<button type="button" name="quick-menu" class="pure-button">メニュー</button>
-			<button type="button" name="system-menu">システム選択</button>
-			<button type="button" name="setting-menu">設定</button>
-		</div>
+	<div class="o-container">
+		<span class="pure-button-group" role="group">
+			<button name="quick-menu" class="pure-button">メニュー</button>
+			<button name="system-menu" class="pure-button">システム選択</button>
+			<button name="setting-menu" class="pure-button">設定</button>
+		</span>
+	</div>
 
 <!--
 	リスト
 -->
-		<div class="o-container">
-			<button type="button" name="list-switch">一覧表</button>
-			<button type="button" name="pivot-switch">集計表</button>
-			<button type="button" name="chart-switch">チャート</button>
-			<button type="button" name="calender-switch">カレンダー</button>
-			<button type="button" name="download">ダウンロード</button>
-			<button type="button" name="upload">アップロード</button>
-			<button type="button" name="insert">新規</button>
-		</div>
+	<div class="o-container">
+		<span class="pure-button-group" role="group">
+			<button name="list-switch" class="pure-button">一覧表</button>
+			<button name="pivot-switch" class="pure-button">集計表</button>
+			<button name="chart-switch" class="pure-button">チャート</button>
+			<button name="calender-switch" class="pure-button">カレンダー</button>
+		</span>
+		<button name="download" class="pure-button">ダウンロード</button>
+		<button name="upload" class="pure-button">アップロード</button>
+		<button name="insert" class="pure-button">新規</button>
+	</div>
 
 <!--
 	詳細編集
 -->
 		<div class="o-container">
-			<button type="button" name="save">保存</button>
-			<button type="button" name="delete">削除</button>
-			<button type="button" name="devirt">流用</button>
-			<button type="button" name="refresh">再表示</button>
-			<button type="button" name="download">ダウンロード</button>
-			<button type="button" name="upload">アップロード</button>
+			<button name="save" class="pure-button">保存</button>
+			<button name="delete" class="pure-button">削除</button>
+			<button name="devirt" class="pure-button">流用</button>
+			<button name="refresh" class="pure-button">再表示</button>
+			<button name="download" class="pure-button">ダウンロード</button>
+			<button name="upload" class="pure-button">アップロード</button>
 		</div>
 	</div>
 </header>
@@ -55,13 +71,17 @@
 <nav id="contents-nav">
 	<div class="o-container">
 		<ul>
-			<li><a href="">XXX画面</a></li>
+			<li><a href="" class="pure-button">製番管理</a></li>
+			<li><a href="" class="pure-button">ワークフロー</a></li>
+			<li><a href="" class="pure-button">メール</a></li>
+			<li><a href="" class="pure-button">履歴</a></li>
 		</ul>
 	</div>
 
 </nav>
 
-<aside id="">
+<aside id="" style="border:1px solid #c0c0c0">
+    <h1>メニュー</h1>
 	<nav>
 		<dl>
 			<dt>コスト管理</dt>
@@ -90,9 +110,9 @@
 
 		<div class="l-float">
 			<div class="o-container">
-				<label><select name="kb_nendo"></select></label>
-				<label><select name="cd_nendo"></select></label>
-				<label><select name="dt_yyyymm"></select></label>
+				<label><select name="kb_nendo" class="o-selectbox"></select></label>
+				<label><select name="cd_nendo" class="o-selectbox"></select></label>
+				<label><select name="dt_yyyymm" class="o-selectbox"></select></label>
 				<label><input type="checkbox" name="kb_resent">仕掛</label>
 			</div>
 		</div>
@@ -132,7 +152,7 @@
 	<div id="list-controller">
 		<div id="contents-container">
 
-			<button name="list-boolmark-button">ブックマーク</button>
+			<button name="list-boolmark-button" class="pure-button">ブックマーク</button>
 			<input name="list-filter">
 
 			<select name="ページサイズ"></select>
