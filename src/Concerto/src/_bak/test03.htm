@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	
+	
+	<title></title>
+</head>
+<body>
+<div id="container">
+
+<header id="top-nav">
+	<div class="l-float">
+
+<!--
+	共通
+-->
+		<div class="o-container">
+			<button type="button" name="quick-menu">メニュー</button>
+			<button type="button" name="system-menu">システム選択</button>
+			<button type="button" name="setting-menu">設定</button>
+		</div>
+
+<!--
+	リスト
+-->
+		<div class="o-container">
+			<button type="button" name="list-switch">一覧表</button>
+			<button type="button" name="pivot-switch">集計表</button>
+			<button type="button" name="chart-switch">チャート</button>
+			<button type="button" name="calender-switch">カレンダー</button>
+			<button type="button" name="download">ダウンロード</button>
+			<button type="button" name="upload">アップロード</button>
+			<button type="button" name="insert">新規</button>
+		</div>
+
+<!--
+	詳細編集
+-->
+		<div class="o-container">
+			<button type="button" name="save">保存</button>
+			<button type="button" name="delete">削除</button>
+			<button type="button" name="devirt">流用</button>
+			<button type="button" name="refresh">再表示</button>
+			<button type="button" name="download">ダウンロード</button>
+			<button type="button" name="upload">アップロード</button>
+		</div>
+	</div>
+</header>
+
+<!--
+	個別画面で持つリンク
+-->
+<nav id="contents-nav">
+	<div class="o-container">
+		<ul>
+			<li><a href="">XXX画面</a></li>
+		</ul>
+	</div>
+
+</nav>
+
+<aside id="">
+	<nav>
+		<dl>
+			<dt>コスト管理</dt>
+			<dd><a href="">製番管理</a></dd>
+			<dd><a href="">製番一覧</a></dd>
+			<dd><a href="">製番計画</a></dd>
+			<dd><a href="">製番管理</a></dd>
+		</dl>
+
+		<dl>
+			<dt>負荷管理</dt>
+			<dd><a href="">負荷山管理</a></dd>
+			<dd><a href="">負荷実績</a></dd>
+			<dd><a href="">負荷計画</a></dd>
+			<dd><a href="">非直課管理</a></dd>
+		</dl>
+
+	</nav>
+</aside>
+
+<main id="main-contents">
+<!--
+	一覧の場合
+-->
+	<div id="contents-controller">
+
+		<div class="l-float">
+			<div class="o-container">
+				<label><select name="kb_nendo"></select></label>
+				<label><select name="cd_nendo"></select></label>
+				<label><select name="dt_yyyymm"></select></label>
+				<label><input type="checkbox" name="kb_resent">仕掛</label>
+			</div>
+		</div>
+	</div>
+
+	<div id="contents-container">
+		<div id="list-contents"></div>
+		<div id="pivot-contents"></div>
+		<div id="chart-contents"></div>
+	</div>
+
+<!--
+	編集の場合
+	wfのような特殊なものは個別
+-->
+	<div id="contents-container">
+		<form name="">
+			<fieldset>
+				<legend>注番</legend>
+				<input type="text" name="no_cyu">
+
+				<legend>部門</legend>
+				<select name="cd_bumon_select"></select>
+				<input type="text" name="no_cyu" readonly>
+			
+			</fieldset>
+		</form>
+	</div>
+
+</main>
+<footer></footer>
+
+<!--
+	一覧表
+-->
+<template id="list-contents-template">
+	<div id="list-controller">
+		<div id="contents-container">
+
+			<button name="list-boolmark-button">ブックマーク</button>
+			<input name="list-filter">
+
+			<select name="ページサイズ"></select>
+			<div id="list-pager">
+				<div></div>
+			</div>
+
+		</div>
+	</div>
+	
+	<div id="list-entry"></div>
+
+</template>
+
+<!--
+	pivot
+-->
+<template id="pivot-contents-template">
+	<div id="pivot-controller">
+		<div id="contents-container">
+		</div>
+	</div>
+	
+	<div id="pivot-entry"></div>
+
+</template>
+
+<!--
+	chart
+-->
+<template id="chart-contents-template">
+	<div id="chart-controller">
+		<div id="contents-container">
+
+			<select name="chart-type"></select>
+			
+			
+			<button name="show-chart"></button>
+		</div>
+	</div>
+	
+	<div id="chart-entry"></div>
+
+</template>
+
+<!--
+	calendar
+-->
+<template id="calendar-contents-template">
+	<div id="calendar-controller">
+		<div id="contents-container">
+		</div>
+	</div>
+	
+	<div id="calendar-entry"></div>
+
+</template>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
