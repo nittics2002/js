@@ -12,7 +12,7 @@ NoScript,PrivateBudger設定
 ## 231223
 
 - test.htm
-
+    - navはボタンでなくメニュー機能を使ったほうが良いのか?
 
 
 ## 231222
@@ -33,4 +33,4 @@ NoScript,PrivateBudger設定
 
 [Pure.Css](https://purecss.io/)
 [select2js](https://select2.org/)
-
+[pure-css-modal](https://github.com/jorgechavz/pure-css-modal)

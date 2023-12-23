@@ -121,27 +121,11 @@
 
 		<div class="l-float">
 			<div class="o-container">
-				<select name="kb_nendo" class="o-selectbox" title="年度選択">
-          <option></option>
-          <option>2023S</option>
-          <option>2023K</option>
-        </select>
-
-        <select name="cd_nendo" class="o-selectbox" title="部門選択">
-          <option></option>
-          <option>IJA02</option>
-          <option>IKA02</option>
-        </select>
-
-        <select name="dt_yymm" class="o-selectbox" title="年月選択">
-          <option></option>
-          <option>2310</option>
-          <option>2311</option>
-        </select>
-
-        <label><input type="checkbox" name="kb_resent">仕掛</label>
-
-      </div>
+				<label><select name="kb_nendo" class="o-selectbox"></select></label>
+				<label><select name="cd_nendo" class="o-selectbox"></select></label>
+				<label><select name="dt_yyyymm" class="o-selectbox"></select></label>
+				<label><input type="checkbox" name="kb_resent">仕掛</label>
+			</div>
 		</div>
 	</div>
 
@@ -157,6 +141,7 @@
 -->
 	<div id="contents-container">
 		<form name="">
+			<fieldset>
 				<legend>注番</legend>
 				<input type="text" name="no_cyu">
 
@@ -164,6 +149,7 @@
 				<select name="cd_bumon_select"></select>
 				<input type="text" name="no_cyu" readonly>
 			
+			</fieldset>
 		</form>
 	</div>
 
