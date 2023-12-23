@@ -2,11 +2,20 @@
 
 ConcertoAPI化検討
 
-## 231222
+## js利用
+
+下記追加
+    <meta http-equiv="Content-Security-Policy" content="script-src localhost:* cdnjs.cloudflare.com cdn.jsdelivr.net">
+
+NoScript,PrivateBudger設定
+
+## 231223
 
 - test.htm
-    - cdnがcps違反で読めない
 
+
+
+## 231222
 
 - template01.htm
     - 基本構造

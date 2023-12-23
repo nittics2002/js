@@ -3,32 +3,29 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Security-Policy" content="script-src localhost:* cdnjs.cloudflare.com cdn.jsdelivr.net">
-  
-  <link rel="icon" href="/favicon.png">
-  
+
+<!--
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src localhost" >
+    <meta http-equiv="Content-Security-Policy" content="script-src localhost cdn.jsdelivr.net" >
+-->
+    <meta http-equiv="Content-Security-Policy" content="script-src *" >
+
+
+
+    
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
 
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
-	<script defer src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-	
-	<script defer src="js/concerto_select2.js"></script>
-	
-	<title></title>
-
-  <style>
-    footer {
-      height:200px;
-    }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     
-  </style>
+    <script defer src="js/concerto_select2.js"></script>
 
-
-
+    
+	<title></title>
 </head>
 <body>
 <div id="container">
@@ -92,7 +89,7 @@
 </nav>
 
 <aside id="" style="border:1px solid #c0c0c0">
-	<h1>メニュー</h1>
+    <h1>メニュー</h1>
 	<nav>
 		<dl>
 			<dt>コスト管理</dt>
