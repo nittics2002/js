@@ -10,76 +10,77 @@
 *	@param StoragePromise storage
 *	@param ClientPrimise client
 */
-var RepositoryPrimise = function(storage, client) {
-	this.storage = storage;
-	this.client = client;
+var RepositoryPrimise = function(_storage, _client) {
+	storage = _storage;
+	client = _client;
+
+    /**
+    *	find
+    *
+    *	@param string tableName
+    *	@param string key
+    *	@return Promise(array)
+    */
+    let find = function(tableName,key) {
+        return new Promise(function(resolve, reject){
+            const storageKey = buildStorageKey(tableName,key);
+            let hasStorage = false;
+            
+            storage.get(storageKey)
+                .then(function(data) {
+                    
+                    console.log("----storage");
+
+                    hasStorage = true;
+                    const parsed = JSON.parse(data);
+
+                    resolve(parsed);
+                    
+                }).catch(function(e) {
+                    return client.find(tableName,key);
+                    
+                }).then(function(data) {
+                    
+                    console.log("----client");
+
+                    if (hasStorage) {
+                        return;
+                    }
+                    
+                    console.log("----client2");
+
+                    
+                    const strValue = JSON.stringify(data);
+                    
+                    storage.set(storageKey, strValue)
+                        .then(function() {
+                            resolve(data);
+                        }).catch(function(e) {
+                            reject(e);
+                    });
+                    
+                }).catch(function(e) {
+                    reject(e);
+                    
+                });
+        });	
+    }
+
+    /**
+    *	buildStorageKey
+    *
+    *	@param string tableName
+    *	@param string tableName
+    *	@return string
+    */
+    let buildStorageKey = function(tableName,key) {
+        return tableName + '_' + key;
+    };
+
+    return {
+        find:find,
+    };
 };
-
-/**
-*	find
-*
-*	@param string tableName
-*	@param string key
-*	@return Promise(array)
-*/
-RepositoryPrimise.prototype.find = function(tableName,key) {
-	let that = this;
-	
-	return new Promise(function(resolve, reject){
-		const storageKey = that.buildStorageKey(tableName,key);
-        let hasStorage = false;
-        
-		that.storage.get(storageKey)
-			.then(function(data) {
-				
-				console.log("----storage");
-
-                hasStorage = true;
-				const parsed = JSON.parse(data);
-
-                resolve(parsed);
-				
-			}).catch(function(e) {
-				return that.client.find(tableName,key);
-				
-			}).then(function(data) {
-				
-				console.log("----client");
-
-                if (hasStorage) {
-                    return;
-                }
-				
-				console.log("----client2");
-
-                
-				const strValue = JSON.stringify(data);
-				
-				that.storage.set(storageKey, strValue)
-					.then(function() {
-						resolve(data);
-					}).catch(function(e) {
-						reject(e);
-				});
-				
-			}).catch(function(e) {
-				reject(e);
-				
-			});
-	});	
-}
-
-/**
-*	buildStorageKey
-*
-*	@param string tableName
-*	@param string tableName
-*	@return string
-*/
-RepositoryPrimise.prototype.buildStorageKey = function(tableName,key) {
-	return tableName + '_' + key;
-};
-
 
 
 const settings = {

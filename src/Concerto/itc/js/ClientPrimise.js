@@ -4,43 +4,40 @@
 *	@version 231227
 */
 
-/**
-*	constructor
-*
-*	@param object settings
-*/
-var ClientPrimise = function(settings, communicator) {
-	this.communicator = communicator === undefined?
-		new CommunicatorPromise():communicator;
+var ClientPrimise = (function(_settings, _communicator) {
+	communicator = _communicator === undefined?
+		new CommunicatorPromise():_communicator;
 		
-	this.settings = settings;
-};
+	settings = _settings;
 
-/**
-*	find
-*
-*	@param string tableName
-*	@param string tableName
-*	@return Promise(XMLHttpRequest)
-*/
-ClientPrimise.prototype.find = function(tableName,key) {
-	let that = this;
-	
-	return new Promise(function(resolve, reject){
-		if (! tableName in settings) {
-			reject('table not defined. tableName=' + tableName);
-		} else {
-			let url = settings[tableName].replace(/{key}/, key);
-			
-			that.communicator.fetch(url)
-				.then(function(req) {
-					resolve(req.response.data);
-				}).catch(function(e) {
-					reject(e)
-				});
-		}
-	});	
-}
+    /**
+    *	find
+    *
+    *	@param string tableName
+    *	@param string tableName
+    *	@return Promise(XMLHttpRequest)
+    */
+    let find = function(tableName,key) {
+        return new Promise(function(resolve, reject){
+            if (! tableName in settings) {
+                reject('table not defined. tableName=' + tableName);
+            } else {
+                let url = settings[tableName].replace(/{key}/, key);
+                
+                communicator.fetch(url)
+                    .then(function(req) {
+                        resolve(req.response.data);
+                    }).catch(function(e) {
+                        reject(e)
+                    });
+            }
+        });	
+    };
+
+    return {
+        find:find,
+    };
+};
 
 
 /*

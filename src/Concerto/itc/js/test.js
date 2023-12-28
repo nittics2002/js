@@ -3,196 +3,182 @@
 *
 *	@version 231227
 */
-
-/**
-*	constructor
-*
-*	@param object settings
-*       {tableListName,expiry(min)}
-*	@param StoragePrimise storage
-*/
-var StorageManagerPrimise = function(settings, storage) {
-	this.storage = storage === undefined?
-		new StoragePromise():storage;
+var StorageManagerPrimise = (function(_settings, _storage) {
+	storage = _storage === undefined?
+		new StoragePromise():_storage;
 		
-	this.settings = settings;
+	settings = _settings;
 
-    this.tableListName = this.settings.tableListName === undefined?
-        'tableList':this.settings.tableListName;
+    tableListName = settings.tableListName === undefined?
+        'tableList':settings.tableListName;
 
-    this.expiry = this.settings.expiry === undefined?
-        30:this.settings.expiry;
+    expiry = settings.expiry === undefined?
+        30:settings.expiry;
 
-    this.tableList = {};
+    tableList = {};
 
-    this.initTableList();
-};
+    initTableList();
 
-/**
-*	initTableList
-*
-*	@return Promise(void)
-*/
-StorageManagerPrimise.prototype.initTableList = function() {
-	const that = this;
+    /**
+    *	initTableList
+    *
+    *	@return Promise(void)
+    */
+    let initTableList = function() {
+        return new Promise(function(resolve,reject){	
+            storage.get(tableListName)
+                .then(function(data) {
+                    tableList = JSON.parse(data);
 
-	return new Promise(function(resolve,reject){	
+                    if (isExpired(tableListName)) {
+                        storage.clear()
+                            .then(function() {
+                                return createTableList();
+                            }).then(function() {
+                                resolve();
+                            }).catch(function(e){
+                                reject(e);
+                            });
 
-        that.storage.get(that.tableListName)
-            .then(function(data) {
-                that.tableList = JSON.parse(data);
-
-                if (that.isExpired(that.tableListName)) {
-                    that.storage.clear()
+                    } else {
+                        resolve();
+                    }
+                }).catch(function(e){
+                    createTableList()
                         .then(function() {
-                            return that.createTableList();
-                        }).then(function() {
                             resolve();
                         }).catch(function(e){
                             reject(e);
                         });
+                });
+        });
+    };
 
-                } else {
+    /**
+    *	createTableList
+    *
+    *	@return Promise(void)
+    */
+    let createTableList = function() {
+        return new Promise(function(resolve,reject){	
+            let tableList = {};
+            tableList[tableListName] = {};
+            tableList[tableListName]['create_at'] = new Date().toISOString();
+            
+            const strData = JSON.stringify(tableList);
+            
+            storage.set(tableListName, strData)
+                .then(function(data) {
                     resolve();
-                }
-            }).catch(function(e){
-                that.createTableList()
-                    .then(function() {
-                        resolve();
+                }).catch(function(e){
+                    reject('error createTableList');
+                });
+        });
+    };
+
+    /**
+    *	isExpired
+    *
+    *	@param string key
+    *	@return bool
+    */
+    let isExpired = function(key) {
+        const createAt = tableList[key] === undefined ||
+            tableList[key]['create_at'] === undefined?
+                new Date('1970-01-01'):
+                new Date(tableList[key]['create_at']);
+
+        return (new Date()) - createAt > expiry * 60 * 24 * 1000;
+    };
+
+    /**
+    *	get
+    *
+    *	@param string key
+    *	@return Promise(string)
+    */
+    let get = function(key) {
+        return new Promise(function(resolve, reject){
+            if (that.isExpired(key)) {
+                storage.remove(key)
+                    .then(function(data) {
+                        delete tableList[key];
+                        return storage.set(tableListName, tableList);
+                    }).then(function() {
+                        reject('timeout. key=' + key);
                     }).catch(function(e){
                         reject(e);
                     });
-            });
-	});
-};
+            } else {
+                storage.get(key)
+                    .then(function(data) {
+                        resolve(data);
+                    }).catch(function(e){
+                        reject(e);
+                    });
+            }
+        });	
+    };
 
-/**
-*	createTableList
-*
-*	@return Promise(void)
-*/
-StorageManagerPrimise.prototype.createTableList = function() {
-	const that = this;
-
-	return new Promise(function(resolve,reject){	
-        let tableList = {};
-        tableList[that.tableListName] = {};
-        tableList[that.tableListName]['create_at'] = new Date().toISOString();
-        
-        const strData = JSON.stringify(tableList);
-        
-        that.storage.set(that.tableListName, strData)
-            .then(function(data) {
-                resolve();
-            }).catch(function(e){
-                reject('error createTableList');
-            });
-	});
-};
-
-/**
-*	isExpired
-*
-*	@param string key
-*	@return bool
-*/
-StorageManagerPrimise.prototype.isExpired = function(key) {
-    const createAt = this.tableList[key] === undefined ||
-        this.tableList[key]['create_at'] === undefined?
-            new Date('1970-01-01'):
-            new Date(this.tableList[key]['create_at']);
-
-    return (new Date()) - createAt > this.expiry * 60 * 24 * 1000;
-};
-
-/**
-*	get
-*
-*	@param string key
-*	@return Promise(string)
-*/
-StorageManagerPrimise.prototype.get = function(key) {
-	const that = this;
-	
-	return new Promise(function(resolve, reject){
-        if (that.isExpired(key)) {
-            that.storage.remove(key)
-                .then(function(data) {
-                    delete that.tableList[key];
-                    return that.storage.set(that.tableListName, that.tableList);
-                }).then(function() {
-                    reject('timeout. key=' + key);
-                }).catch(function(e){
+    /**
+    *	set
+    *
+    *	@param string key
+    *	@param string value
+    *	@return Promise(void)
+    */
+    StorageManagerPrimise.prototype.set = function(key, value) {
+        return new Promise(function(resolve,reject){	
+            storage.set(key, value)
+                .then(function() {
+                    resolve();
+                }).catch(function(e) {
                     reject(e);
                 });
-        } else {
-            that.storage.get(key)
-                .then(function(data) {
-                    resolve(data);
-                }).catch(function(e){
+        });	
+    };
+
+    /**
+    *	remove
+    *
+    *	@param string key
+    *	@return Promise(void)
+    */
+    let remove = function(key) {
+        return new Promise(function(resolve,reject){	
+            storage.remove(key)
+                .then(function() {
+                    resolve();
+                }).catch(function(e) {
                     reject(e);
                 });
-        }
-	});	
-}
-
-/**
-*	set
-*
-*	@param string key
-*	@param string value
-*	@return Promise(void)
-*/
-StorageManagerPrimise.prototype.set = function(key, value) {
-	const that = this;
-
-	return new Promise(function(resolve,reject){	
-        that.storage.set(key, value)
-            .then(function() {
-                resolve();
-            }).catch(function(e) {
-                reject(e);
-            });
-	});	
-}
-
-/**
-*	remove
-*
-*	@param string key
-*	@return Promise(void)
-*/
-StorageManagerPrimise.prototype.remove = function(key) {
-	const that = this;
-
-	return new Promise(function(resolve,reject){	
-        that.storage.remove(key)
-            .then(function() {
-                resolve();
-            }).catch(function(e) {
-                reject(e);
-            });
-	});	
-}
+        });	
+    }
 
 
-/**
-*	clear
-*
-*	@return Promise(void)
-*/
-StorageManagerPrimise.prototype.clear = function() {
-	const that = this;
+    /**
+    *	clear
+    *
+    *	@return Promise(void)
+    */
+    let clear = function() {
+        return new Promise(function(resolve,reject){	
+            storage.clear()
+                .then(function() {
+                    resolve();
+                }).catch(function(e) {
+                    reject(e);
+                });
+        });	
+    };
 
-	return new Promise(function(resolve,reject){	
-        that.storage.clear()
-            .then(function() {
-                resolve();
-            }).catch(function(e) {
-                reject(e);
-            });
-	});	
-}
+    return {
+        get:get,
+        set:set,
+        remove:remove,
+        clear:clear,
+    };
+};
 
 
 const settings = {
