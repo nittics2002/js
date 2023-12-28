@@ -13,8 +13,11 @@
 [モジュールについて](https://jp-seemore.com/web/4222/?PageSpeed=noscript)
 [quita](https://qiita.com/chuck0523/items/1868a4c04ab4d8cdfb23)
 
-モジュール化する?
+モジュール化開始
 
+関数式?関数?
+
+- StoragePromise済
 
 --------------------------------------------------------------------------------
 
