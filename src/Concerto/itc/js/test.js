@@ -25,33 +25,67 @@ var StorageManagerPrimise = function(settings, storage) {
 
     this.tableList = {};
 
-    this.getOrCreateTableList();
+    this.initTableList();
 };
 
 /**
-*	getOrCreateTableList
+*	initTableList
 *
-*	@param string key
 *	@return Promise(void)
 */
-StorageManagerPrimise.prototype.getOrCreateTableList = function(key) {
+StorageManagerPrimise.prototype.initTableList = function() {
 	const that = this;
 
 	return new Promise(function(resolve,reject){	
 
-        that.get(that.tableListName)
-            .then(function(data)) {
+        that.storage.get(that.tableListName)
+            .then(function(data) {
                 that.tableList = JSON.parse(data);
-                resolve();
-            }).catch(function(e)) {
-                const strData = JSON.stringify({});
-                
-                this.set(that.tableListName, strData)
-                    then(function(data)) {
+
+                if (that.isExpired(that.tableListName)) {
+                    that.storage.clear()
+                        .then(function() {
+                            return that.createTableList();
+                        }).then(function() {
+                            resolve();
+                        }).catch(function(e){
+                            reject(e);
+                        });
+
+                } else {
+                    resolve();
+                }
+            }).catch(function(e){
+                that.createTableList()
+                    .then(function() {
                         resolve();
-                    }).catch(function(e)) {
-                        reject('error getOrCreateTableList');
+                    }).catch(function(e){
+                        reject(e);
                     });
+            });
+	});
+};
+
+/**
+*	createTableList
+*
+*	@return Promise(void)
+*/
+StorageManagerPrimise.prototype.createTableList = function() {
+	const that = this;
+
+	return new Promise(function(resolve,reject){	
+        let tableList = {};
+        tableList[that.tableListName] = {};
+        tableList[that.tableListName]['create_at'] = new Date().toISOString();
+        
+        const strData = JSON.stringify(tableList);
+        
+        that.storage.set(that.tableListName, strData)
+            .then(function(data) {
+                resolve();
+            }).catch(function(e){
+                reject('error createTableList');
             });
 	});
 };
@@ -83,51 +117,95 @@ StorageManagerPrimise.prototype.get = function(key) {
 	return new Promise(function(resolve, reject){
         if (that.isExpired(key)) {
             that.storage.remove(key)
-                then(function(data)) {
+                .then(function(data) {
+                    delete that.tableList[key];
+                    return that.storage.set(that.tableListName, that.tableList);
+                }).then(function() {
                     reject('timeout. key=' + key);
-                }).catch(function(e)) {
+                }).catch(function(e){
                     reject(e);
                 });
         } else {
             that.storage.get(key)
-                then(function(data)) {
+                .then(function(data) {
                     resolve(data);
-                }).catch(function(e)) {
+                }).catch(function(e){
                     reject(e);
                 });
         }
 	});	
 }
 
+/**
+*	set
+*
+*	@param string key
+*	@param string value
+*	@return Promise(void)
+*/
+StorageManagerPrimise.prototype.set = function(key, value) {
+	const that = this;
+
+	return new Promise(function(resolve,reject){	
+        that.storage.set(key, value)
+            .then(function() {
+                resolve();
+            }).catch(function(e) {
+                reject(e);
+            });
+	});	
+}
+
+/**
+*	remove
+*
+*	@param string key
+*	@return Promise(void)
+*/
+StorageManagerPrimise.prototype.remove = function(key) {
+	const that = this;
+
+	return new Promise(function(resolve,reject){	
+        that.storage.remove(key)
+            .then(function() {
+                resolve();
+            }).catch(function(e) {
+                reject(e);
+            });
+	});	
+}
 
 
+/**
+*	clear
+*
+*	@return Promise(void)
+*/
+StorageManagerPrimise.prototype.clear = function() {
+	const that = this;
+
+	return new Promise(function(resolve,reject){	
+        that.storage.clear()
+            .then(function() {
+                resolve();
+            }).catch(function(e) {
+                reject(e);
+            });
+	});	
+}
 
 
-
-/*
 const settings = {
-	users:'https://itcv1800005m.toshiba.local:8086/_js/AlaSql/example/test2/users.json?id={key}',
-	kobans:'https://itcv1800005m.toshiba.local:8086/_js/AlaSql/example/test2/kobans.json?nendo={key}',
+    tableList:'table_list',
+    expiry:1,
 };
 
 const client = new StorageManagerPrimise(settings);
 
-client.find('users','')
-	.then(function(req){
-		console.log(req);
-		
-		
-		
-	}).catch(function(e){
-		console.error(e);
 
-	});
-		
 
 
 console.log("END");
-	
-*/
 
 
 
