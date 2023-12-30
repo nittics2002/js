@@ -3,31 +3,6 @@
 非同期処理を念頭に検討する
 
 --------------------------------------------------------------------------------
-## 231230
-
-再整理
-
-- WebStorage
-    - infra
-    - キャッシュに該当
-        - unittest作成テスト中
-- Communicator
-    - infra
-- WebClient
-    - domain
-    - URLをもつ
-- Repository
-    - domain
-        - 出庫 leaving() 入庫 stock() 補充 supply()
-    - WebStorage に無ければ WebClient から取得 & WebStorage に保存
-    - メモリにデータを持つ
-- Picker
-    - domain
-    - SQLでRepositoryよりデータを取得する
-
-
-
---------------------------------------------------------------------------------
 ## 231228
 
 - WebStoragePromise
