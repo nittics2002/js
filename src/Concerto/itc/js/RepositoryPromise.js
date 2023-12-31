@@ -23,6 +23,13 @@ var RepositoryPrimise = function(_storage, _client) {
     */
     let find = function(tableName,params) {
         return new Promise(function(resolve, reject){
+
+
+
+
+
+
+
             const storageKey = buildStorageKey(tableName,key);
             let hasStorage = false;
             
@@ -73,15 +80,92 @@ var RepositoryPrimise = function(_storage, _client) {
     *	@param object params
     *	@return string
     */
-    let buildQuery = function(tableName, params) {
+    let buildStorageKey = function(tableName, params) {
         return tableName +
-            Object.keys(params).map(function(key,index,ar) {
+            Object.keys(params).sort().map(function(key,index,ar) {
                 return params[key];
             }).join('_');
     };
 
+    /**
+    *	fetch
+    *
+    *	@param string tableName
+    *	@param object params
+    *	@return object
+    */
+    let fetch = function(tableName, params) {
+        return client.fetch(tableName, params)
+            .then(function(data) {
+                const storageKey = buildStorageKey(tableName, params);
+                
+                storage.set(storageKey, JSON.Stringify({
+                    create_at:new Date().toISOString(),
+                    'data':data,
+                });
+                
+                return data;
+            }).then(function(data) {
+                return data;
+            }).catch(function(e) {
+                return e;
+            });
+    };
+
+    /**
+    *	fromStorage
+    *
+    *	@param string tableName
+    *	@param object params
+    *	@return object
+    */
+    let fromStorage = function(tableName, params) {
+        const storageKey = buildStorageKey(tableName,key);
+        
+        return storage.get(storageKey)
+            .then(function(dataStr) {
+                const dataset = JSON.parse(dataStr);
+
+                if (dataset.create_at !== undefined ||
+                    isExpired(dataset.create_at)
+                ) {
+                    return fetch(tableName, params);
+                } else {
+                    return dataset.data;
+                }
+            }).catch(function(e) {
+                return e;
+            });
+    };
+
+    /**
+    *	isExpired
+    *
+    *	@param string dateString
+    *	@return bool
+    */
+    let isExpired = function(dateString) {
+        const createAt = new Date(dateString);
+
+        return new Date() >
+            createAt.setSeconds(createAt.getSeconds() + expiry;
+    };
+
+    /**
+    *	remove
+    *
+    *	@param string tableName
+    *	@param object params
+    *	@return Primise
+    */
+    let remove = function(tableName, params) {
+        const storageKey = buildStorageKey(tableName,key);
+        return storage.remove(storageKey);
+    };
+
     return {
         find:find,
+        remove:remove,
     };
 };
 
@@ -89,7 +173,7 @@ var RepositoryPrimise = function(_storage, _client) {
 const settings = {
 	//users:'https://itcv1800005m.toshiba.local:8086/_js/AlaSql/example/test2/users.json?id={key}',
 	//kobans:'https://itcv1800005m.toshiba.local:8086/_js/AlaSql/example/test2/kobans.json?nendo={key}',
-	users:'https://localhost:8000/users.json?id={key}',
+	users:'https://localhost:8000/users.json',
 	kobans:'https://localhost:8000/kobans.json',
 };
 
