@@ -55,4 +55,19 @@ var CommunicatorPromise = (function() {
         fetch:fetch,
     };
 	
-};
+});
+
+///////////////////////////////////////////////////////////////////////////////
+
+/*
+
+const obj = new CommunicatorPromise();
+
+obj.fetch('users.json')
+    .then(function(xhr) {
+        console.log(xhr.response);
+    }).catch(function(e) {
+        console.error(e);
+    });
+
+*/
