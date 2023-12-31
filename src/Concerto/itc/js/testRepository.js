@@ -11,17 +11,17 @@
 *	@param ClientPrimise client
 */
 var RepositoryPrimise = function(_storage, _client) {
-	storage = _storage;
-	client = _client;
+	const storage = _storage;
+	const client = _client;
 
     /**
     *	find
     *
     *	@param string tableName
-    *	@param string key
+    *	@param ?object params
     *	@return Promise(array)
     */
-    let find = function(tableName,key) {
+    let find = function(tableName,params) {
         return new Promise(function(resolve, reject){
             const storageKey = buildStorageKey(tableName,key);
             let hasStorage = false;
@@ -33,7 +33,7 @@ var RepositoryPrimise = function(_storage, _client) {
 
                     hasStorage = true;
                     const parsed = JSON.parse(data);
-
+                    
                     resolve(parsed);
                     
                 }).catch(function(e) {
@@ -70,11 +70,14 @@ var RepositoryPrimise = function(_storage, _client) {
     *	buildStorageKey
     *
     *	@param string tableName
-    *	@param string tableName
+    *	@param object params
     *	@return string
     */
-    let buildStorageKey = function(tableName,key) {
-        return tableName + '_' + key;
+    let buildQuery = function(tableName, params) {
+        return tableName +
+            Object.keys(params).map(function(key,index,ar) {
+                return params[key];
+            }).join('_');
     };
 
     return {
@@ -87,12 +90,12 @@ const settings = {
 	//users:'https://itcv1800005m.toshiba.local:8086/_js/AlaSql/example/test2/users.json?id={key}',
 	//kobans:'https://itcv1800005m.toshiba.local:8086/_js/AlaSql/example/test2/kobans.json?nendo={key}',
 	users:'https://localhost:8000/users.json?id={key}',
-	kobans:'https://localhost:8000/kobans.json?nendo={key}',
+	kobans:'https://localhost:8000/kobans.json',
 };
 
 const client = new ClientPrimise(settings);
 
-const storage = new StoragePromise();
+const storage = new WebStoragePromise();
 
 const repository = new RepositoryPrimise(storage,client);
 
@@ -100,7 +103,7 @@ const repository = new RepositoryPrimise(storage,client);
 // window.localStorage.clear();
 
 
-repository.find('users','')
+repository.find('users')
 	.then(function(req){
 		console.log(req);
 		
