@@ -14,7 +14,7 @@ var WevStoragePromise = (function(_namespace, _isPersisted) {
     /**
     *	@var ?string
     */
-    const namespace =  _namespace === undefined?
+    const namespace =  _namespace == null?
             null:_namespace;
 
     /**
@@ -110,8 +110,8 @@ var WevStoragePromise = (function(_namespace, _isPersisted) {
             if (namespace !== null) {
                 const storage = _isPersisted?
                     localStorage:sessionStorage;
-
-                const re = new Regexp('/^' +  namespace + '_');
+                
+                const re = new RegExp('^' +  namespace + '_');
 
                 let key;
 
@@ -119,7 +119,7 @@ var WevStoragePromise = (function(_namespace, _isPersisted) {
                     key = storage.key(i);
                     
                     if (re.test(key)) {
-                        storage.remove(key);
+                        storage.removeItem(key);
                     }
                 }
 
@@ -155,10 +155,16 @@ var WevStoragePromise = (function(_namespace, _isPersisted) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+/*
+
 const test1 = (new Promise(function(resolve, reject) {
     console.info("===名前空間なし タイプ指定なし");
 
     window.localStorage.clear();
+    window.sessionStorage.clear();
+    window.localStorage.setItem('DUMMY','LOCAL');
+    window.sessionStorage.setItem('DUMMY','SESSION');
+
     const obj = new WevStoragePromise();
     
     obj.set('abc', "ABC")
@@ -189,12 +195,19 @@ const test1 = (new Promise(function(resolve, reject) {
 
 }));
 
+*/
 
+
+/*
 const test2 = (new Promise(function(resolve, reject) {
     console.info("===名前空間なし タイプ指定=true");
 
     window.localStorage.clear();
-    const obj = new WevStoragePromise(true);
+    window.sessionStorage.clear();
+    window.localStorage.setItem('DUMMY','LOCAL');
+    window.sessionStorage.setItem('DUMMY','SESSION');
+
+    const obj = new WevStoragePromise(null,true);
     
     obj.set('abc', "ABC", true)
     .then(function(data) {
@@ -224,117 +237,225 @@ const test2 = (new Promise(function(resolve, reject) {
 
 }));
 
+*/
 
-for (fn in [test1, test2]) {
-    fn
-    .then(function() {
-    }).catch(function(e) {
-        console.info("---error main");
-        console.error(e);
-    });
-}
 
-console.log('END');
+/*
+
+const test3 = (new Promise(function(resolve, reject) {
+    console.info("===名前空間なし タイプ指定=false");
+
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+    window.localStorage.setItem('DUMMY','LOCAL');
+    window.sessionStorage.setItem('DUMMY','SESSION');
+
+    const obj = new WevStoragePromise(null,false);
+    
+    obj.set('abc', "ABC", false)
+    .then(function(data) {
+        console.info("---set then");
+        return;
+    }).then(function() {
+        console.info("---get");
         
-
-
-
-
-
-
-
-
-
-
-/*
-
-
-
-obj.set('abc', "ABC")
-    .then(function(data) {
-        console.info("---set then");
+        return obj.get('abc', false)
+            .then(function(data) {
+                console.info("---get then");
+                console.log(data);
+                return;
+            }).then(function() {
+                return obj.remove('abc',false);
+            }).then(function(data) {
+                console.info("---get then after remove");
+                return obj.get('abc',false);
+            }).catch(function(e) {
+                console.info("---error inner");
+                console.log(e);
+            });
     }).catch(function(e) {
-        console.info("---set catch");
+        console.info("---error outer");
         console.error(e);
     });
 
-obj.set('def', "DEF", true)
-    .then(function(data) {
-        console.info("---set then");
-    }).catch(function(e) {
-        console.info("---set catch");
-        console.error(e);
-    });
-
-obj.set('ghi', "GHI", false)
-    .then(function(data) {
-        console.info("---set then");
-    }).catch(function(e) {
-        console.info("---set catch");
-        console.error(e);
-    });
+}));
 
 */
 
 /*
 
-obj.get('abc')
+const test4 = (new Promise(function(resolve, reject) {
+    console.info("===名前空間あり タイプ指定=なし");
+
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+    window.localStorage.setItem('DUMMY','LOCAL');
+    window.sessionStorage.setItem('DUMMY','SESSION');
+
+    const obj = new WevStoragePromise('TABLE');
+    
+    obj.set('abc', "ABC", false)
     .then(function(data) {
-        console.info("---get then");
-        console.log(data);
+        console.info("---set then");
+        return;
+    }).then(function() {
+        console.info("---get");
+        
+        return obj.get('abc', false)
+            .then(function(data) {
+                console.info("---get then");
+                console.log(data);
+                return;
+            }).then(function() {
+                return obj.remove('abc',false);
+            }).then(function(data) {
+                console.info("---get then after remove");
+                return obj.get('abc',false);
+            }).catch(function(e) {
+                console.info("---error inner");
+                console.log(e);
+            });
     }).catch(function(e) {
-        console.info("---get catch");
+        console.info("---error outer");
         console.error(e);
     });
 
-obj.get('def', true)
-    .then(function(data) {
-        console.info("---get then");
-        console.log(data);
-    }).catch(function(e) {
-        console.info("---get catch");
-        console.error(e);
-    });
-
-obj.get('ghi',false)
-    .then(function(data) {
-        console.info("---get then");
-        console.log(data);
-    }).catch(function(e) {
-        console.info("---get catch");
-        console.error(e);
-    });
+}));
 
 */
 
 
 /*
 
+const test11 = (new Promise(function(resolve, reject) {
+    console.info("===名前空間あり タイプ指定=false");
 
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+    window.localStorage.setItem('DUMMY','LOCAL');
+    window.sessionStorage.setItem('DUMMY','SESSION');
 
-obj.remove('abc')
+    const obj = new WevStoragePromise('TABLE', false);
+    
+    obj.set('abc', "ABC")
     .then(function(data) {
-        return obj.get('abc', "ABCDEFG")
+        console.info("---nothing isPersist=false");
+        return obj.get('abc');
     }).then(function(data) {
-        console.info("---get then");
         console.log(data);
     }).catch(function(e) {
-        console.info("---get catch");
         console.error(e);
     });
 
-obj.get('opq', "OPQRST")
+}));
+
+*/
+
+
+/*
+
+const test12 = (new Promise(function(resolve, reject) {
+    console.info("===名前空間あり タイプ指定=false");
+
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+    window.localStorage.setItem('DUMMY','LOCAL');
+    window.sessionStorage.setItem('DUMMY','SESSION');
+
+    const obj = new WevStoragePromise('TABLE', false);
+    
+    obj.set('abc', "ABC")
     .then(function(data) {
-        console.info("---get then");
-        console.log(data);
+        console.info("---nothing isPersist=true");
+        return obj.get('abc', true);
+    }).then(function(data) {
+        console.error(data);
     }).catch(function(e) {
-        console.info("---get catch");
-        console.error(e);
+        console.info("---ok. not match isPersist");
+        console.log(e);
     });
 
+}));
 
-console.log("END");
+*/
 
+/*
+
+const test21 = (new Promise(function(resolve, reject) {
+    console.info("===名前空間あり タイプ指定=false");
+
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+    window.localStorage.setItem('DUMMY','LOCAL');
+    window.sessionStorage.setItem('DUMMY','SESSION');
+
+    const obj = new WevStoragePromise('TABLE', false);
+    
+    obj.set('abc', "ABC")
+    .then(function(data) {
+        console.info("---clear isPersist=false");
+        return obj.clear(false);
+    }).then(function() {
+        console.log(window.sessionStorage.length);
+    }).catch(function(e) {
+        console.log(e);
+    });
+
+}));
+
+*/
+
+
+/*
+
+const test22 = (new Promise(function(resolve, reject) {
+    console.info("===名前空間あり タイプ指定=false");
+
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+    window.localStorage.setItem('DUMMY','LOCAL');
+    window.sessionStorage.setItem('DUMMY','SESSION');
+
+    const obj = new WevStoragePromise('TABLE', false);
+    
+    obj.set('abc', "ABC")
+    .then(function(data) {
+        console.info("---clear isPersist=none");
+        return obj.clear();
+    }).then(function() {
+        console.log(window.sessionStorage.length);
+    }).catch(function(e) {
+        console.log(e);
+    });
+
+}));
+
+*/
+
+
+/*
+
+const test23 = (new Promise(function(resolve, reject) {
+    console.info("===名前空間なし タイプ指定=false");
+
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+    window.localStorage.setItem('DUMMY','LOCAL');
+    window.sessionStorage.setItem('DUMMY','SESSION');
+
+    const obj = new WevStoragePromise(null, false);
+    
+    obj.set('abc', "ABC")
+    .then(function(data) {
+        console.info("---clear isPersist=none");
+        return obj.clear();
+    }).then(function() {
+        console.log(window.sessionStorage.length);
+    }).catch(function(e) {
+        console.log(e);
+    });
+
+}));
 
 */
 
