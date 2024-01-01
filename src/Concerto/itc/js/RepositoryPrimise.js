@@ -123,9 +123,10 @@ console.info('---cache');
     */
     let isExpired = function(dateString) {
         const createAt = new Date(dateString);
+        const now = new Date();
 
-        return new Date() >
-            createAt.setSeconds(createAt.getSeconds()) + expiry;
+        return now.getTime() >
+            createAt.getTime() + expiry;
     };
 
     /**
@@ -166,12 +167,25 @@ const storage = new WebStoragePromise();
 
 const isExpiredTest = (function() {
     const repository = new RepositoryPrimise(storage,client,{
-        expiry:60 * 60,
+        expiry:60,
     });
 
     console.log(repository.isExpired(new Date()));
 
     console.log(repository.isExpired('2001-1-1 00:00:00'));
+
+    const dt = new Date();
+    const dt2 = dt.getTime() - 61 * 1000;
+    const dt3 = dt.getTime() - 59 * 1000;
+
+
+    console.log(dt);
+    console.log(new Date(dt2));
+    console.log(new Date(dt3));
+
+    console.log(repository.isExpired(dt2));
+    console.log(repository.isExpired(dt3));
+
 
 })();
 
