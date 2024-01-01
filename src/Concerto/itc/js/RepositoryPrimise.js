@@ -12,14 +12,14 @@
 *	@param ?object client settings
 *       {expiry(sec)}
 */
-var RepositoryPrimise = function(_storage, _client, _settings) {
-	const storage = _storage;
-	const client = _client;
+var RepositoryPrimise = function(storage, client, settings) {
+	storage = storage;
+	client = client;
 
-    const settings = _settings === undefined?
-        {}:_settings;
+    settings = settings === undefined?
+        {}:settings;
 
-    const expiry = settings.expiry === undefined?
+    expiry = settings.expiry === undefined?
         30 * 60 * 1000:settings.expiry * 1000;
 
     /**
@@ -151,6 +151,7 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
     };
 };
 
+/*
 
 const settings = {
 	//users:'https://itcv1800005m.toshiba.local:8086/_js/AlaSql/example/test2/users.json?id={key}',
@@ -162,6 +163,8 @@ const settings = {
 const client = new ClientPrimise(settings);
 
 const storage = new WebStoragePromise();
+
+*/
 
 /*
 
