@@ -35,51 +35,17 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
 
 
 
-
-
-
-            const storageKey = buildStorageKey(tableName,key);
-            let hasStorage = false;
-            
-            storage.get(storageKey)
+            readStorage(tableName,params)
                 .then(function(data) {
-                    
-                    console.log("----storage");
 
-                    hasStorage = true;
-                    const parsed = JSON.parse(data);
-                    
-                    resolve(parsed);
+console.info('---then');
                     
                 }).catch(function(e) {
-                    return client.find(tableName,key);
-                    
-                }).then(function(data) {
-                    
-                    console.log("----client");
 
-                    if (hasStorage) {
-                        return;
-                    }
-                    
-                    console.log("----client2");
-
-                    
-                    const strValue = JSON.stringify(data);
-                    
-                    storage.set(storageKey, strValue)
-                        .then(function() {
-                            resolve(data);
-                        }).catch(function(e) {
-                            reject(e);
-                    });
-                    
-                }).catch(function(e) {
-                    reject(e);
-                    
+console.info('---cache');
                 });
-        });	
-    }
+        });
+    };
 
     /**
     *	buildStorageKey
@@ -288,14 +254,13 @@ const readStorageTest2 = (function() {
                 'data':data
             };
 
-            localStorage.setItem('users_', JSON.stringify(dt));
+            storage.set('users_', JSON.stringify(dt));
             
             repository.readStorage('users')
                 .then(function(data) {
-                    console.error(data);
+                    console.log(data);
                 }).catch(function(e) {
-                    console.info('nothing datetime OK');
-                    console.log(e);
+                    console.error(e);
                 });
         }).catch(function(e) {
             console.error(e);
@@ -320,14 +285,13 @@ const readStorageTest3 = (function() {
                 'data':data
             };
 
-            localStorage.setItem('users_', JSON.stringify(dt));
+            storage.set('users_', JSON.stringify(dt));
             
             repository.readStorage('users')
                 .then(function(data) {
-                    console.error(data);
+                    console.log(data);
                 }).catch(function(e) {
-                    console.info('isExpiry OK');
-                    console.log(e);
+                    console.error(e);
                 });
         }).catch(function(e) {
             console.error(e);
