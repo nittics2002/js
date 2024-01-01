@@ -31,18 +31,18 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
     */
     let find = function(tableName,params) {
         return new Promise(function(resolve, reject){
-
-
-
-
             readStorage(tableName,params)
                 .then(function(data) {
-
-console.info('---then');
+                    resolve(data);
                     
                 }).catch(function(e) {
+                    fetch(tableName,params)
+                        .then(function(data) {
+                            resolve(data);
+                        }).catch(function(e) {
+                            throw e;
+                        });
 
-console.info('---cache');
                 });
         });
     };
@@ -335,6 +335,56 @@ const readStorageTest4 = (function() {
             storage.set('users_', JSON.stringify(dt));
             
             repository.readStorage('users')
+                .then(function(data) {
+                    console.log(data);
+                }).catch(function(e) {
+                    console.error(e);
+                });
+        }).catch(function(e) {
+            console.error(e);
+        });
+})();
+
+*/
+
+/*
+
+const findTest1 = (function() {
+    window.localStorage.clear();
+
+    const repository = new RepositoryPrimise(storage,client,{
+        expiry:60 * 60,
+    });
+
+    repository.find('users')
+        .then(function(data) {
+            console.log(data);
+        }).catch(function(data) {
+            console.error(e);
+        });
+})();
+
+*/
+
+/*
+
+const findTest2 = (function() {
+    window.localStorage.clear();
+
+    const repository = new RepositoryPrimise(storage,client,{
+        expiry:60 * 60,
+    });
+
+    repository.fetch('users')
+        .then(function(data) {
+            const dt = {
+                create_at:new Date(),
+                'data':data
+            };
+
+            storage.set('users_', JSON.stringify(dt));
+            
+            repository.find('users')
                 .then(function(data) {
                     console.log(data);
                 }).catch(function(e) {
