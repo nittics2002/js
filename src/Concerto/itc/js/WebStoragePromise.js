@@ -1,5 +1,5 @@
 /**
-*	WevStoragePromise
+*	WebStoragePromise
 *
 *	@version 231227
 */
@@ -10,7 +10,7 @@
 *	@param ?string _namespace
 *   @param ?bool _isPersisted
 */
-var WevStoragePromise = (function(_namespace, _isPersisted) {
+var WebStoragePromise = (function(_namespace, _isPersisted) {
     /**
     *	@var ?string
     */
@@ -165,7 +165,7 @@ const test1 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new WevStoragePromise();
+    const obj = new WebStoragePromise();
     
     obj.set('abc', "ABC")
     .then(function(data) {
@@ -207,7 +207,7 @@ const test2 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new WevStoragePromise(null,true);
+    const obj = new WebStoragePromise(null,true);
     
     obj.set('abc', "ABC", true)
     .then(function(data) {
@@ -250,7 +250,7 @@ const test3 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new WevStoragePromise(null,false);
+    const obj = new WebStoragePromise(null,false);
     
     obj.set('abc', "ABC", false)
     .then(function(data) {
@@ -292,7 +292,7 @@ const test4 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new WevStoragePromise('TABLE');
+    const obj = new WebStoragePromise('TABLE');
     
     obj.set('abc', "ABC", false)
     .then(function(data) {
@@ -335,7 +335,7 @@ const test11 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new WevStoragePromise('TABLE', false);
+    const obj = new WebStoragePromise('TABLE', false);
     
     obj.set('abc', "ABC")
     .then(function(data) {
@@ -362,7 +362,7 @@ const test12 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new WevStoragePromise('TABLE', false);
+    const obj = new WebStoragePromise('TABLE', false);
     
     obj.set('abc', "ABC")
     .then(function(data) {
@@ -389,7 +389,7 @@ const test21 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new WevStoragePromise('TABLE', false);
+    const obj = new WebStoragePromise('TABLE', false);
     
     obj.set('abc', "ABC")
     .then(function(data) {
@@ -416,7 +416,7 @@ const test22 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new WevStoragePromise('TABLE', false);
+    const obj = new WebStoragePromise('TABLE', false);
     
     obj.set('abc', "ABC")
     .then(function(data) {
@@ -443,7 +443,7 @@ const test23 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new WevStoragePromise(null, false);
+    const obj = new WebStoragePromise(null, false);
     
     obj.set('abc', "ABC")
     .then(function(data) {
