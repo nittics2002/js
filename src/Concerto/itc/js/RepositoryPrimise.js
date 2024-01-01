@@ -85,7 +85,7 @@ console.info('---cache');
             }).then(function(data) {
                 return data;
             }).catch(function(e) {
-                return e;
+                throw e;
             });
     };
 
@@ -103,10 +103,10 @@ console.info('---cache');
             .then(function(dataStr) {
                 const dataset = JSON.parse(dataStr);
 
-                if (dataset.create_at !== undefined ||
+                if (dataset.create_at === undefined ||
                     isExpired(dataset.create_at)
                 ) {
-                    return fetch(tableName, params);
+                    throw 'is expired';
                 } else {
                     return dataset.data;
                 }
@@ -258,9 +258,10 @@ const readStorageTest2 = (function() {
             
             repository.readStorage('users')
                 .then(function(data) {
-                    console.log(data);
+                    console.error(data);
                 }).catch(function(e) {
-                    console.error(e);
+                    console.info('nothing create_at OK');
+                    console.log(e);
                 });
         }).catch(function(e) {
             console.error(e);
@@ -289,9 +290,10 @@ const readStorageTest3 = (function() {
             
             repository.readStorage('users')
                 .then(function(data) {
-                    console.log(data);
+                    console.error(data);
                 }).catch(function(e) {
-                    console.error(e);
+                    console.info('create_at is expired ');
+                    console.log(e);
                 });
         }).catch(function(e) {
             console.error(e);
