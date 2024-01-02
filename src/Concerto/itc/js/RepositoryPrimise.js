@@ -22,6 +22,8 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
     const expiry = settings.expiry === undefined?
         30 * 60 * 1000:settings.expiry * 1000;
 
+    const dataset = {};
+
     /**
     *	find
     *
@@ -30,8 +32,15 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
     *	@return Promise(array)
     */
     let find = function(tableName,params) {
+        const storageKey = buildStorageKey(tableName, params);
+
         return new Promise(function(resolve, reject){
-            readStorage(tableName,params)
+            if (dataset[storageKey] !== undefined) {
+                resolve(dataset[storageKey]);
+                return;
+            }
+            
+            readStorage(storageKey)
                 .then(function(data) {
                     resolve(data);
                     
@@ -72,9 +81,11 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
     *	@return object
     */
     let fetch = function(tableName, params) {
+        const storageKey = buildStorageKey(tableName,params);
+        
         return client.find(tableName, params)
             .then(function(data) {
-                const storageKey = buildStorageKey(tableName, params);
+                dataset[storageKey] = data;
                 
                 storage.set(storageKey, JSON.stringify({
                     create_at:new Date().toISOString(),
@@ -92,23 +103,20 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
     /**
     *	readStorage
     *
-    *	@param string tableName
-    *	@param object params
+    *	@param string storageKey
     *	@return object
     */
-    let readStorage = function(tableName, params) {
-        const storageKey = buildStorageKey(tableName,params);
-        
+    let readStorage = function(storageKey) {
         return storage.get(storageKey)
             .then(function(dataStr) {
-                const dataset = JSON.parse(dataStr);
+                const parsedData = JSON.parse(dataStr);
 
-                if (dataset.create_at === undefined ||
-                    isExpired(dataset.create_at)
+                if (parsedData.create_at === undefined ||
+                    isExpired(parsedData.create_at)
                 ) {
                     throw 'is expired';
                 } else {
-                    return dataset.data;
+                    return parsedData.data;
                 }
             }).catch(function(e) {
                 throw e;
@@ -137,7 +145,10 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
     *	@return Primise
     */
     let remove = function(tableName, params) {
-        const storageKey = buildStorageKey(tableName,key);
+        const storageKey = buildStorageKey(tableName,params);
+
+        delete dataset[storageKey];
+        
         return storage.remove(storageKey);
     };
 
@@ -145,6 +156,7 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
         find:find,
         remove:remove,
         //以下テスト用
+            dataset:dataset,
             isExpired:isExpired,
             fetch:fetch,
             readStorage:readStorage,
@@ -205,6 +217,11 @@ const fetchTest1 = (function() {
             console.log(data);
             console.info('---localStorage');
             console.log(window.localStorage.getItem('users'));
+            console.log(repository.dataset);
+            return repository.fetch('users');;
+        }).then(function(data) {
+            console.info('---dataset');
+            console.log(data);
         }).catch(function(e) {
             console.error(e);
         });
@@ -226,6 +243,11 @@ const fetchTest2= (function() {
             console.log(data);
             console.info('---localStorage');
             console.log(window.localStorage.getItem('kobans_2023K_202307'));
+            console.log(repository.dataset);
+            return repository.fetch('users');;
+        }).then(function(data) {
+            console.info('---dataset');
+            console.log(data);
         }).catch(function(e) {
             console.error(e);
         });
@@ -359,6 +381,9 @@ const findTest1 = (function() {
     repository.find('users')
         .then(function(data) {
             console.log(data);
+            return repository.find('users');
+        }).then(function(data) {
+            console.log(data);
         }).catch(function(data) {
             console.error(e);
         });
@@ -396,3 +421,26 @@ const findTest2 = (function() {
 })();
 
 */
+
+/*
+
+const removeTest1 = (function() {
+    window.localStorage.clear();
+    
+    window.localStorage.setItem('users_','DUMMY');
+    
+    const repository = new RepositoryPrimise(storage,client,{
+        expiry:60 * 60,
+    });
+
+    repository.remove('users')
+        .then(function() {
+            console.log(repository.dataset);
+            console.log(window.localStorage.getItem('users_'));
+        }).catch(function(e) {
+            console.error(e);
+        });
+})();
+
+*/
+
