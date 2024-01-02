@@ -22,8 +22,6 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
     const expiry = settings.expiry === undefined?
         30 * 60 * 1000:settings.expiry * 1000;
 
-    const dataset = {};
-
     /**
     *	find
     *
@@ -35,11 +33,6 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
         const storageKey = buildStorageKey(tableName, params);
 
         return new Promise(function(resolve, reject){
-            if (dataset[storageKey] !== undefined) {
-                resolve(dataset[storageKey]);
-                return;
-            }
-            
             readStorage(storageKey)
                 .then(function(data) {
                     resolve(data);
@@ -85,8 +78,6 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
         
         return client.find(tableName, params)
             .then(function(data) {
-                dataset[storageKey] = data;
-                
                 storage.set(storageKey, JSON.stringify({
                     create_at:new Date().toISOString(),
                     'data':data,
@@ -146,9 +137,6 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
     */
     let remove = function(tableName, params) {
         const storageKey = buildStorageKey(tableName,params);
-
-        delete dataset[storageKey];
-        
         return storage.remove(storageKey);
     };
 
@@ -156,7 +144,6 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
         find:find,
         remove:remove,
         //以下テスト用
-            dataset:dataset,
             isExpired:isExpired,
             fetch:fetch,
             readStorage:readStorage,
@@ -220,7 +207,6 @@ const fetchTest1 = (function() {
             console.log(data);
             console.info('---localStorage');
             console.log(window.localStorage.getItem('users'));
-            console.log(repository.dataset);
             return repository.fetch('users');;
         }).then(function(data) {
             console.info('---dataset');
@@ -246,7 +232,6 @@ const fetchTest2= (function() {
             console.log(data);
             console.info('---localStorage');
             console.log(window.localStorage.getItem('kobans_2023K_202307'));
-            console.log(repository.dataset);
             return repository.fetch('users');;
         }).then(function(data) {
             console.info('---dataset');
@@ -438,7 +423,6 @@ const removeTest1 = (function() {
 
     repository.remove('users')
         .then(function() {
-            console.log(repository.dataset);
             console.log(window.localStorage.getItem('users_'));
         }).catch(function(e) {
             console.error(e);
