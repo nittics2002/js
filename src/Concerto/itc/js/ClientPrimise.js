@@ -4,12 +4,11 @@
 *	@version 231227
 */
 
-var ClientPrimise = (function(settings, communicator) {
-	communicator = communicator === undefined?
-		new CommunicatorPromise():communicator;
+var ClientPrimise = (function(_settings, _communicator) {
+	const communicator = _communicator === undefined?
+		new CommunicatorPromise():_communicator;
 		
-	settings = settings === undefined?
-        {}:settings;
+	const settings = _settings;
 
     /**
     *	find
@@ -18,17 +17,17 @@ var ClientPrimise = (function(settings, communicator) {
     *	@param ?object params
     *	@return Promise(XMLHttpRequest)
     */
-    let find = function(tableName,params) {
+    let find = function(_tableName,_params) {
         return new Promise(function(resolve, reject){
-            let url = settings[tableName]
+            let url = settings[_tableName]
 
             if (url === undefined) {
-                reject('table not defined. tableName=' + tableName);
+                reject('table not defined. tableName=' + _tableName);
             } else {
-                const query = params !== undefined?
-                    '?' + buildQuery(params):'';
+                const query = _params !== undefined?
+                    '?' + buildQuery(_params):'';
 
-                url = settings[tableName] + query;
+                url = settings[_tableName] + query;
                 
                 communicator.fetch(url)
                     .then(function(req) {

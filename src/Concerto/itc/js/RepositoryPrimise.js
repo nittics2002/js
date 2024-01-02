@@ -12,17 +12,15 @@
 *	@param ?object client settings
 *       {expiry(sec)}
 */
-var RepositoryPrimise = function(storage, client, settings) {
-	storage = storage;
-	client = client;
+var RepositoryPrimise = function(_storage, _client, _settings) {
+	const storage = _storage;
+	const client = _client;
 
-    settings = settings === undefined?
-        {}:settings;
+    const settings = _settings === undefined?
+        {}:_settings;
 
-    expiry = settings.expiry === undefined?
+    const expiry = settings.expiry === undefined?
         30 * 60 * 1000:settings.expiry * 1000;
-
-    dataset = {};
 
     /**
     *	find
@@ -32,26 +30,14 @@ var RepositoryPrimise = function(storage, client, settings) {
     *	@return Promise(array)
     */
     let find = function(tableName,params) {
-        const storageKey = buildStorageKey(tableName,params);
-
         return new Promise(function(resolve, reject){
-            if (dataset[storageKey] !== undefined) {
-                resolve(dataset[storageKey]);
-            }
-
-
-console.log('---after dataset');
-
-
-            readStorage(storageKey)
+            readStorage(tableName,params)
                 .then(function(data) {
-                    dataset[storageKey] = data;
                     resolve(data);
                     
                 }).catch(function(e) {
                     fetch(tableName,params)
                         .then(function(data) {
-                            dataset[storageKey] = data;
                             resolve(data);
                         }).catch(function(e) {
                             throw e;
@@ -106,20 +92,23 @@ console.log('---after dataset');
     /**
     *	readStorage
     *
-    *	@param string storageKey
+    *	@param string tableName
+    *	@param object params
     *	@return object
     */
-    let readStorage = function(storageKey) {
+    let readStorage = function(tableName, params) {
+        const storageKey = buildStorageKey(tableName,params);
+        
         return storage.get(storageKey)
             .then(function(dataStr) {
-                const parsedData = JSON.parse(dataStr);
+                const dataset = JSON.parse(dataStr);
 
-                if (parsedData.create_at === undefined ||
-                    isExpired(parsedData.create_at)
+                if (dataset.create_at === undefined ||
+                    isExpired(dataset.create_at)
                 ) {
                     throw 'is expired';
                 } else {
-                    return parsedData.data;
+                    return dataset.data;
                 }
             }).catch(function(e) {
                 throw e;
@@ -149,9 +138,6 @@ console.log('---after dataset');
     */
     let remove = function(tableName, params) {
         const storageKey = buildStorageKey(tableName,key);
-
-        delete dataset[storageKey];
-        
         return storage.remove(storageKey);
     };
 
@@ -165,7 +151,6 @@ console.log('---after dataset');
     };
 };
 
-/*
 
 const settings = {
 	//users:'https://itcv1800005m.toshiba.local:8086/_js/AlaSql/example/test2/users.json?id={key}',
@@ -177,8 +162,6 @@ const settings = {
 const client = new ClientPrimise(settings);
 
 const storage = new WebStoragePromise();
-
-*/
 
 /*
 
