@@ -177,16 +177,12 @@ const test1 = (new Promise(function(resolve, reject) {
         return obj.get('abc')
             .then(function(data) {
                 console.info("---get then");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 console.log(data);
                 return;
             }).then(function() {
                 return obj.remove('abc');
             }).then(function(data) {
                 console.info("---get then after remove");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 return obj.get('abc');
             }).catch(function(e) {
                 console.info("---error inner");
@@ -223,16 +219,12 @@ const test2 = (new Promise(function(resolve, reject) {
         return obj.get('abc', true)
             .then(function(data) {
                 console.info("---get then");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 console.log(data);
                 return;
             }).then(function() {
                 return obj.remove('abc',true);
             }).then(function(data) {
                 console.info("---get then after remove");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 return obj.get('abc',true);
             }).catch(function(e) {
                 console.info("---error inner");
@@ -270,16 +262,12 @@ const test3 = (new Promise(function(resolve, reject) {
         return obj.get('abc', false)
             .then(function(data) {
                 console.info("---get then");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 console.log(data);
                 return;
             }).then(function() {
                 return obj.remove('abc',false);
             }).then(function(data) {
                 console.info("---get then after remove");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 return obj.get('abc',false);
             }).catch(function(e) {
                 console.info("---error inner");
@@ -316,16 +304,12 @@ const test4 = (new Promise(function(resolve, reject) {
         return obj.get('abc', false)
             .then(function(data) {
                 console.info("---get then");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 console.log(data);
                 return;
             }).then(function() {
                 return obj.remove('abc',false);
             }).then(function(data) {
                 console.info("---get then after remove");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 return obj.get('abc',false);
             }).catch(function(e) {
                 console.info("---error inner");
@@ -340,7 +324,6 @@ const test4 = (new Promise(function(resolve, reject) {
 
 */
 
-/*
 
 const test5 = (new Promise(function(resolve, reject) {
     console.info("===名前空間あり タイプ指定=なし 個別=なし");
@@ -362,16 +345,12 @@ const test5 = (new Promise(function(resolve, reject) {
         return obj.get('abc')
             .then(function(data) {
                 console.info("---get then");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 console.log(data);
                 return;
             }).then(function() {
                 return obj.remove('abc');
             }).then(function(data) {
                 console.info("---get then after remove");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 return obj.get('abc');
             }).catch(function(e) {
                 console.info("---error inner");
@@ -384,7 +363,7 @@ const test5 = (new Promise(function(resolve, reject) {
 
 }));
 
-*/
+
 
 /*
 
@@ -401,8 +380,6 @@ const test11 = (new Promise(function(resolve, reject) {
     obj.set('abc', "ABC")
     .then(function(data) {
         console.info("---nothing isPersist=false");
-        window.localStorage.getItem('abc');
-        window.sesstionStorage.getItem('abc');
         return obj.get('abc');
     }).then(function(data) {
         console.log(data);
@@ -430,8 +407,6 @@ const test12 = (new Promise(function(resolve, reject) {
     obj.set('abc', "ABC")
     .then(function(data) {
         console.info("---nothing isPersist=true");
-        window.localStorage.getItem('abc');
-        window.sesstionStorage.getItem('abc');
         return obj.get('abc', true);
     }).then(function(data) {
         console.error(data);

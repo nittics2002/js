@@ -7,37 +7,31 @@
 /**
 *	constructor
 *
-*	@param ?string _namespace
-*   @param ?bool _isPersisted
+*	@param ?string namespace
+*   @param ?bool isPersisted
 */
-var WebStoragePromise = (function(_namespace, _isPersisted) {
-    /**
-    *	@var ?string
-    */
-    const namespace =  _namespace == null?
-            null:_namespace;
+var WebStoragePromise = (function(namespace, isPersisted) {
+    namespace = namespace == null?
+            null:namespace;
 
-    /**
-    *	@var bool
-    */
-    const isPersisted =  _isPersisted === undefined?
-            true:_isPersisted;
+    isPersisted = isPersisted === undefined?
+            true:isPersisted;
 
     /**
     *	get
     *
     *	@param string key
-    *   @param ?bool _isPersisted
+    *   @param ?bool isPersisted
     *	@return Promise(string)
     */
-    let get = function(_key, _isPersisted) {
+    let get = function(key, isPersisted) {
         return new Promise(function(resolve,reject){	
-            _isPersisted = _isPersisted === undefined?
-                isPersisted:_isPersisted;
+            isPersisted = isPersisted === undefined?
+                isPersisted:isPersisted;
 
-            const key = buildKeyName(_key);
+            key = buildKeyName(key);
             
-            const value = _isPersisted?
+            const value = isPersisted?
                 localStorage.getItem(key):
                 sessionStorage.getItem(key);
             
@@ -54,19 +48,19 @@ var WebStoragePromise = (function(_namespace, _isPersisted) {
     *
     *	@param string key
     *	@param string value
-    *   @param ?bool _isPersisted
+    *   @param ?bool isPersisted
     *	@return Promise(void)
     */
-    let set = function(_key, _value, _isPersisted) {
+    let set = function(key, value, isPersisted) {
         return new Promise(function(resolve,reject){	
-            _isPersisted = _isPersisted === undefined?
-                isPersisted:_isPersisted;
+            isPersisted = isPersisted === undefined?
+                isPersisted:isPersisted;
 
-            const key = buildKeyName(_key);
+            key = buildKeyName(key);
 
-            const compressed = lzbase62.compress(_value)
+            const compressed = lzbase62.compress(value)
 
-            _isPersisted?
+            isPersisted?
                 localStorage.setItem(key, compressed):
                 sessionStorage.setItem(key, compressed);
             
@@ -78,17 +72,17 @@ var WebStoragePromise = (function(_namespace, _isPersisted) {
     *	remove
     *
     *	@param string key
-    *   @param ?bool _isPersisted
+    *   @param ?bool isPersisted
     *	@return Promise(void)
     */
-    let remove = function(_key, _isPersisted) {
+    let remove = function(key, isPersisted) {
         return new Promise(function(resolve,reject){	
-            _isPersisted = _isPersisted === undefined?
-                isPersisted:_isPersisted;
+            isPersisted = isPersisted === undefined?
+                isPersisted:isPersisted;
 
-            const key = buildKeyName(_key);
+            key = buildKeyName(key);
 
-            _isPersisted?
+            isPersisted?
                 localStorage.removeItem(key):
                 sessionStorage.removeItem(key);
             
@@ -99,16 +93,16 @@ var WebStoragePromise = (function(_namespace, _isPersisted) {
     /**
     *	clear
     *
-    *   @param ?bool _isPersisted
+    *   @param ?bool isPersisted
     *	@return Promise(void)
     */
-    let clear = function(_isPersisted) {
+    let clear = function(isPersisted) {
         return new Promise(function(resolve,reject){	
-            _isPersisted = _isPersisted === undefined?
-                isPersisted:_isPersisted;
+            isPersisted = isPersisted === undefined?
+                isPersisted:isPersisted;
 
             if (namespace !== null) {
-                const storage = _isPersisted?
+                const storage = isPersisted?
                     localStorage:sessionStorage;
                 
                 const re = new RegExp('^' +  namespace + '_');
@@ -124,7 +118,7 @@ var WebStoragePromise = (function(_namespace, _isPersisted) {
                 }
 
             } else {
-                _isPersisted?
+                isPersisted?
                     localStorage.clear():
                     sessionStorage.clear();
             }
@@ -139,10 +133,10 @@ var WebStoragePromise = (function(_namespace, _isPersisted) {
     *   @param string key
     *	@return string
     */
-    let buildKeyName = function(_key) {
+    let buildKeyName = function(key) {
         return namespace !== null?
-            namespace + '_' + _key:
-            _key;
+            namespace + '_' + key:
+            key;
     };
 
     return {
@@ -157,8 +151,8 @@ var WebStoragePromise = (function(_namespace, _isPersisted) {
 
 /*
 
-const test1 = (new Promise(function(resolve, reject) {
-    console.info("===名前空間なし タイプ指定なし 個別なし");
+const test1 = (function() {
+    console.info("===名前空間なし タイプ指定なし");
 
     window.localStorage.clear();
     window.sessionStorage.clear();
@@ -177,16 +171,12 @@ const test1 = (new Promise(function(resolve, reject) {
         return obj.get('abc')
             .then(function(data) {
                 console.info("---get then");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 console.log(data);
                 return;
             }).then(function() {
                 return obj.remove('abc');
             }).then(function(data) {
                 console.info("---get then after remove");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 return obj.get('abc');
             }).catch(function(e) {
                 console.info("---error inner");
@@ -197,14 +187,14 @@ const test1 = (new Promise(function(resolve, reject) {
         console.error(e);
     });
 
-}));
+})();
 
 */
 
 
 /*
-const test2 = (new Promise(function(resolve, reject) {
-    console.info("===名前空間なし タイプ指定=true 個別=true");
+const test2 = (function() {
+    console.info("===名前空間なし タイプ指定=true");
 
     window.localStorage.clear();
     window.sessionStorage.clear();
@@ -223,16 +213,12 @@ const test2 = (new Promise(function(resolve, reject) {
         return obj.get('abc', true)
             .then(function(data) {
                 console.info("---get then");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 console.log(data);
                 return;
             }).then(function() {
                 return obj.remove('abc',true);
             }).then(function(data) {
                 console.info("---get then after remove");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 return obj.get('abc',true);
             }).catch(function(e) {
                 console.info("---error inner");
@@ -243,15 +229,15 @@ const test2 = (new Promise(function(resolve, reject) {
         console.error(e);
     });
 
-}));
+})();
 
 */
 
 
 /*
 
-const test3 = (new Promise(function(resolve, reject) {
-    console.info("===名前空間なし タイプ指定=false 個別=false");
+const test3 = (function() {
+    console.info("===名前空間なし タイプ指定=false");
 
     window.localStorage.clear();
     window.sessionStorage.clear();
@@ -270,16 +256,12 @@ const test3 = (new Promise(function(resolve, reject) {
         return obj.get('abc', false)
             .then(function(data) {
                 console.info("---get then");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 console.log(data);
                 return;
             }).then(function() {
                 return obj.remove('abc',false);
             }).then(function(data) {
                 console.info("---get then after remove");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 return obj.get('abc',false);
             }).catch(function(e) {
                 console.info("---error inner");
@@ -290,14 +272,14 @@ const test3 = (new Promise(function(resolve, reject) {
         console.error(e);
     });
 
-}));
+})();
 
 */
 
 /*
 
-const test4 = (new Promise(function(resolve, reject) {
-    console.info("===名前空間あり タイプ指定=なし 個別=false");
+const test4 = (function() {
+    console.info("===名前空間あり タイプ指定=なし");
 
     window.localStorage.clear();
     window.sessionStorage.clear();
@@ -316,16 +298,12 @@ const test4 = (new Promise(function(resolve, reject) {
         return obj.get('abc', false)
             .then(function(data) {
                 console.info("---get then");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 console.log(data);
                 return;
             }).then(function() {
                 return obj.remove('abc',false);
             }).then(function(data) {
                 console.info("---get then after remove");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
                 return obj.get('abc',false);
             }).catch(function(e) {
                 console.info("---error inner");
@@ -336,59 +314,14 @@ const test4 = (new Promise(function(resolve, reject) {
         console.error(e);
     });
 
-}));
+})();
 
 */
 
-/*
-
-const test5 = (new Promise(function(resolve, reject) {
-    console.info("===名前空間あり タイプ指定=なし 個別=なし");
-
-    window.localStorage.clear();
-    window.sessionStorage.clear();
-    window.localStorage.setItem('DUMMY','LOCAL');
-    window.sessionStorage.setItem('DUMMY','SESSION');
-
-    const obj = new WebStoragePromise('TABLE');
-    
-    obj.set('abc', "ABC")
-    .then(function(data) {
-        console.info("---set then");
-        return;
-    }).then(function() {
-        console.info("---get");
-        
-        return obj.get('abc')
-            .then(function(data) {
-                console.info("---get then");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
-                console.log(data);
-                return;
-            }).then(function() {
-                return obj.remove('abc');
-            }).then(function(data) {
-                console.info("---get then after remove");
-                window.localStorage.getItem('abc');
-                window.sesstionStorage.getItem('abc');
-                return obj.get('abc');
-            }).catch(function(e) {
-                console.info("---error inner");
-                console.log(e);
-            });
-    }).catch(function(e) {
-        console.info("---error outer");
-        console.error(e);
-    });
-
-}));
-
-*/
 
 /*
 
-const test11 = (new Promise(function(resolve, reject) {
+const test11 = (function(resolve, reject) {
     console.info("===名前空間あり タイプ指定=false");
 
     window.localStorage.clear();
@@ -401,8 +334,6 @@ const test11 = (new Promise(function(resolve, reject) {
     obj.set('abc', "ABC")
     .then(function(data) {
         console.info("---nothing isPersist=false");
-        window.localStorage.getItem('abc');
-        window.sesstionStorage.getItem('abc');
         return obj.get('abc');
     }).then(function(data) {
         console.log(data);
@@ -410,14 +341,14 @@ const test11 = (new Promise(function(resolve, reject) {
         console.error(e);
     });
 
-}));
+})();
 
 */
 
 
 /*
 
-const test12 = (new Promise(function(resolve, reject) {
+const test12 = (function(resolve, reject) {
     console.info("===名前空間あり タイプ指定=false");
 
     window.localStorage.clear();
@@ -430,8 +361,6 @@ const test12 = (new Promise(function(resolve, reject) {
     obj.set('abc', "ABC")
     .then(function(data) {
         console.info("---nothing isPersist=true");
-        window.localStorage.getItem('abc');
-        window.sesstionStorage.getItem('abc');
         return obj.get('abc', true);
     }).then(function(data) {
         console.error(data);
@@ -440,13 +369,13 @@ const test12 = (new Promise(function(resolve, reject) {
         console.log(e);
     });
 
-}));
+})();
 
 */
 
 /*
 
-const test21 = (new Promise(function(resolve, reject) {
+const test21 = (function(resolve, reject) {
     console.info("===名前空間あり タイプ指定=false");
 
     window.localStorage.clear();
@@ -466,14 +395,14 @@ const test21 = (new Promise(function(resolve, reject) {
         console.log(e);
     });
 
-}));
+})();
 
 */
 
 
 /*
 
-const test22 = (new Promise(function(resolve, reject) {
+const test22 = (function(resolve, reject) {
     console.info("===名前空間あり タイプ指定=false");
 
     window.localStorage.clear();
@@ -493,14 +422,14 @@ const test22 = (new Promise(function(resolve, reject) {
         console.log(e);
     });
 
-}));
+})();
 
 */
 
 
 /*
 
-const test23 = (new Promise(function(resolve, reject) {
+const test23 = (function(resolve, reject) {
     console.info("===名前空間なし タイプ指定=false");
 
     window.localStorage.clear();
@@ -520,7 +449,7 @@ const test23 = (new Promise(function(resolve, reject) {
         console.log(e);
     });
 
-}));
+})();
 
 */
 
