@@ -163,7 +163,7 @@ var RepositoryPrimise = function(_storage, _client, _settings) {
     };
 };
 
-
+/*
 const settings = {
 	//users:'https://itcv1800005m.toshiba.local:8086/_js/AlaSql/example/test2/users.json?id={key}',
 	//kobans:'https://itcv1800005m.toshiba.local:8086/_js/AlaSql/example/test2/kobans.json?nendo={key}',
@@ -174,6 +174,9 @@ const settings = {
 const client = new ClientPrimise(settings);
 
 const storage = new WebStoragePromise();
+
+*/
+
 
 /*
 
