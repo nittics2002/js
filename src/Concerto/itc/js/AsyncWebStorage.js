@@ -9,8 +9,9 @@
 *
 *	@param ?string namespace
 *   @param ?bool isPersisted
+*   @param ?object compresser
 */
-var AsyncWebStorage = (function(namespace, isPersisted) {
+var AsyncWebStorage = (function(namespace, isPersisted, compresser) {
     /**
     *	@var ?string
     */
@@ -22,6 +23,12 @@ var AsyncWebStorage = (function(namespace, isPersisted) {
     */
     const _isPersisted =  isPersisted === undefined?
             true:isPersisted;
+
+    /**
+    *	@var object
+    */
+    const _compresser =  compresser === undefined?
+            lzbase62:_compresser;
 
     /**
     *	get
@@ -44,7 +51,7 @@ var AsyncWebStorage = (function(namespace, isPersisted) {
             if (value === null) {
                 reject('not found. key=' + keyName);
             } else {
-                resolve(lzbase62.decompress(value));
+                resolve(_compresser.decompress(value));
             }
         });
     };
@@ -64,7 +71,7 @@ var AsyncWebStorage = (function(namespace, isPersisted) {
 
             const keyName = buildKeyName(key);
 
-            const compressed = lzbase62.compress(value)
+            const compressed = _compresser.compress(value)
 
             isPersisted?
                 localStorage.setItem(keyName, compressed):
