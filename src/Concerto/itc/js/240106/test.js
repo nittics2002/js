@@ -7,11 +7,11 @@ const settings = {
 	kobans:'https://localhost:8000/kobans.json',
 };
 
-const client = new AsyncClient(settings);
+const client = new ClientPrimise(settings);
 
-const storage = new AsyncWebStorage('TABLE', false);
+const storage = new WebStoragePromise('TABLE', false);
 
-const repository = new AsyncRepository(storage,client,{
+const repository = new RepositoryPrimise(storage,client,{
     expiry:60,
 });
 
