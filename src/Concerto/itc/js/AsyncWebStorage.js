@@ -21,14 +21,14 @@ var AsyncWebStorage = (function(namespace, isPersisted, compresser) {
     /**
     *	@var bool
     */
-    const _isPersisted =  isPersisted === undefined?
+    const _isPersisted =  isPersisted == null?
             true:isPersisted;
 
     /**
     *	@var object
     */
-    const _compresser =  compresser === undefined?
-            lzbase62:_compresser;
+    const _compresser = compresser === undefined?
+            new NonCompresser():compresser;
 
     /**
     *	get
@@ -164,6 +164,40 @@ var AsyncWebStorage = (function(namespace, isPersisted, compresser) {
 
 /*
 
+const compresserTest = (new Promise(function(resolve, reject) {
+    console.info("===compresser=null");
+
+    window.localStorage.clear();
+    
+    const obj = new AsyncWebStorage(null,null);
+    
+    obj.set('abc', "ABC")
+    .then(function(data) {
+        return;
+    }).then(function() {
+        console.info("---localStorage");
+        console.log(window.localStorage.getItem('abc'));
+        
+        return obj.get('abc')
+            .then(function(data) {
+                console.info("---get then");
+                window.sessionStorage.getItem('abc');
+                console.log(data);
+                return;
+            }).catch(function(e) {
+                console.error(e);
+            });
+    }).catch(function(e) {
+        console.info("---error outer");
+        console.error(e);
+    });
+
+}));
+
+*/
+
+/*
+
 const test1 = (new Promise(function(resolve, reject) {
     console.info("===名前空間なし タイプ指定なし 個別なし");
 
@@ -172,7 +206,7 @@ const test1 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new AsyncWebStorage();
+    const obj = new AsyncWebStorage(null,null,lzbase62);
     
     obj.set('abc', "ABC")
     .then(function(data) {
@@ -218,7 +252,7 @@ const test2 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new AsyncWebStorage(null,true);
+    const obj = new AsyncWebStorage(null,true,lzbase62);
     
     obj.set('abc', "ABC", true)
     .then(function(data) {
@@ -265,7 +299,7 @@ const test3 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new AsyncWebStorage(null,false);
+    const obj = new AsyncWebStorage(null,false,lzbase62);
     
     obj.set('abc', "ABC", false)
     .then(function(data) {
@@ -311,7 +345,7 @@ const test4 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new AsyncWebStorage('TABLE');
+    const obj = new AsyncWebStorage('TABLE',null,lzbase62);
     
     obj.set('abc', "ABC", false)
     .then(function(data) {
@@ -357,7 +391,7 @@ const test5 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new AsyncWebStorage('TABLE');
+    const obj = new AsyncWebStorage('TABLE',null,lzbase62);
     
     obj.set('abc', "ABC")
     .then(function(data) {
@@ -403,7 +437,7 @@ const test11 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new AsyncWebStorage('TABLE', false);
+    const obj = new AsyncWebStorage('TABLE', false,lzbase62);
     
     obj.set('abc', "ABC")
     .then(function(data) {
@@ -432,7 +466,7 @@ const test12 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new AsyncWebStorage('TABLE', false);
+    const obj = new AsyncWebStorage('TABLE', false,lzbase62);
     
     obj.set('abc', "ABC")
     .then(function(data) {
@@ -461,7 +495,7 @@ const test21 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new AsyncWebStorage('TABLE', false);
+    const obj = new AsyncWebStorage('TABLE', false,lzbase62);
     
     obj.set('abc', "ABC")
     .then(function(data) {
@@ -488,7 +522,7 @@ const test22 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new AsyncWebStorage('TABLE', false);
+    const obj = new AsyncWebStorage('TABLE', false,lzbase62);
     
     obj.set('abc', "ABC")
     .then(function(data) {
@@ -515,7 +549,7 @@ const test23 = (new Promise(function(resolve, reject) {
     window.localStorage.setItem('DUMMY','LOCAL');
     window.sessionStorage.setItem('DUMMY','SESSION');
 
-    const obj = new AsyncWebStorage(null, false);
+    const obj = new AsyncWebStorage(null, false,lzbase62);
     
     obj.set('abc', "ABC")
     .then(function(data) {

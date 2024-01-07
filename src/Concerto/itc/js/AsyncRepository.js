@@ -195,7 +195,7 @@ var AsyncRepository = function(storage, client, settings) {
     };
 };
 
-///*
+/*
 
 const _client = new AsyncClient({
 	//users:'https://itcv1800005m.toshiba.local:8086/_js/AlaSql/example/test2/users.json?id={key}',
@@ -205,7 +205,7 @@ const _client = new AsyncClient({
 
 });
 
-const _storage = new AsyncWebStorage();
+const _storage = new AsyncWebStorage(null,null,lzbase62);
 
 const _settings = {
     expiry:2 * 60 * 1000,
@@ -216,6 +216,8 @@ const _settings = {
         },
     },
 };
+
+*/
 
 /*
 

@@ -9,11 +9,9 @@ const settings = {
 
 const client = new AsyncClient(settings);
 
-const storage = new AsyncWebStorage('TABLE', false);
+const storage = new AsyncWebStorage('TABLE', false, lzbase62);
 
-const repository = new AsyncRepository(storage,client,{
-    expiry:60,
-});
+const repository = new AsyncRepository(storage,client);
 
 
 
