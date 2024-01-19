@@ -7,4 +7,5 @@
     - promize[All]で読み込む
     - thenで処理用SQLをpromize実行する
 
+- direct.htm html内での記述はわからない
 

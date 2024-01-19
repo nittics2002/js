@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<link rel="icon" href="favicon.png" size="any"></link>
+
+<script defer src="https://www.promisejs.org/polyfills/promise-7.0.4.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/alasql/0.2/alasql.min.js"></script> 
+<!--
+<script defer src="alasql.min.js"></script>
+-->
+
+
+
+<!--
+<script defer src="test.js"></script>
+-->
+
+<title>direct</title>
+
+</head>
+
+<body>
+
+<h4>直接script</h4>
+<div id="res"></div>
+
+<script type="text/sql" id="sql">
+
+SELECT * INTO HTML("#res",{headers:false}) FROM @[{a:1,b:1,c:1},{a:1,b:2,c:1},{a:1,b:3,c:1}, {a:2,b:1,c:1}]
+);
+
+</script>
+
+<script>
+
+window.addEventListener('load', function() {    
+    alasql('SOURCE "#res"');
+});
+
+</script>
+
+</body>
+
+</html>
+
