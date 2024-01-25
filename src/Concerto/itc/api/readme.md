@@ -4,7 +4,9 @@
 
 ### テーブル表定義
 
+- numberはphp number_formatに従う
 - printfで桁区切りできるならformatType不要
+    - CDNやnodeでのsprintfでは桁区切りできない
 
 ```json
 
@@ -15,7 +17,7 @@
         headerAlign:ヘッダ表示位置(left,right,center),
         align:データ表示位置(left,right,center),
         formatType:表示形式(printf,number),
-        format:表示形式の定義値(numberならscale数,printfなら%sなど)
+        format:[] 表示形式の定義値(numberならscale数や区切り文字,printfなら%sなど)
     },...
 ]
 
@@ -26,11 +28,13 @@
 - APIから送信するデータ案
 - 複数データをまとめて送信
 - RESTでの単一テーブと限定せず、複数テーブル分まとめ、labelで分類
+    - または name で分類
 
 ```json
 
 {
     label:{
+        name:データ名,
         columns:[
             {
                 name:データ名,
