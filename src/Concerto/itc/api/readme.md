@@ -4,8 +4,14 @@
 
 ### 検討事項
 
-- requestのsortはどうする?
-    - クライアント側で処理なので不要?
+- 現Concertoベースではrequestは画面のqueryパラメータで処理
+    - requestのsortはクライアント側で処理なので不要
+
+
+### request parser
+
+
+
 
 
 ### テーブル表定義
