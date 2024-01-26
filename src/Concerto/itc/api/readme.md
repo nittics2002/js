@@ -2,6 +2,12 @@
 
 ## 240126
 
+### 検討事項
+
+- requestのsortはどうする?
+    - クライアント側で処理なので不要?
+
+
 ### テーブル表定義
 
 - numberはphp number_formatに従う
@@ -17,7 +23,7 @@
         headerAlign:ヘッダ表示位置(left,right,center),
         align:データ表示位置(left,right,center),
         formatType:表示形式(printf,number),
-        format:[] 表示形式の定義値(numberならscale数や区切り文字,printfなら%sなど)
+        format:{} 表示形式の定義値(numberならscale数や区切り文字,printfなら%sなど)
     },...
 ]
 
@@ -35,7 +41,7 @@
 {
     label:{
         name:データ名,
-        columns:[
+        fields:[
             {
                 name:データ名,
                 type:データ型(int,float,string,date),
@@ -50,3 +56,20 @@
 }
 
 ```
+
+### API受信データ
+
+- リクエストは複数許可
+- パラメータも複数許可
+
+```json
+
+{
+    label:{
+        name:名前,
+        parameter:{}パラメータ,(あるいはfilter?)
+    },...
+}
+
+```
+
