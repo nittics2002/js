@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Security-Policy" content="script-src localhost:* cdnjs.cloudflare.com cdn.jsdelivr.net">
+  
+    <link rel="icon" href="/favicon.png">
+  
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+	<script defer src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	
+	<script defer src="js/concerto_select2.js"></script>
+
+	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-umd-min.js"></script>
+
+
+	<script defer src="js/concerto_select2.js"></script>
+
+	<script defer src="js/list/test.js"></script>
+
+	
+	<title></title>
+
+  <style>
+    footer {
+      height:200px;
+    }
+    
+  </style>
+
+
+
+</head>
+<body>
+<div id="container">
+
+<header id="top-nav">
+	<div class="l-float">
+
+<!--
+	共通
+-->
+	<div class="o-container">
+		<span class="pure-button-group" role="group">
+			<button name="quick-menu" class="pure-button">メニュー</button>
+			<button name="system-menu" class="pure-button">システム選択</button>
+			<button name="setting-menu" class="pure-button">設定</button>
+		</span>
+	</div>
+
+<!--
+	リスト
+-->
+	<div class="o-container">
+		<span class="pure-button-group" role="group">
+			<button name="list-switch" class="pure-button">一覧表</button>
+			<button name="pivot-switch" class="pure-button">集計表</button>
+			<button name="chart-switch" class="pure-button">チャート</button>
+			<button name="calender-switch" class="pure-button">カレンダー</button>
+		</span>
+		<button name="download" class="pure-button">ダウンロード</button>
+		<button name="upload" class="pure-button">アップロード</button>
+		<button name="insert" class="pure-button">新規</button>
+	</div>
+
+<!--
+	詳細編集
+-->
+		<div class="o-container">
+			<button name="save" class="pure-button">保存</button>
+			<button name="delete" class="pure-button">削除</button>
+			<button name="devirt" class="pure-button">流用</button>
+			<button name="refresh" class="pure-button">再表示</button>
+			<button name="download" class="pure-button">ダウンロード</button>
+			<button name="upload" class="pure-button">アップロード</button>
+		</div>
+	</div>
+</header>
+
+<!--
+	個別画面で持つリンク
+-->
+<nav id="contents-nav">
+	<div class="o-container">
+		<ul>
+			<li><a href="" class="pure-button">製番管理</a></li>
+			<li><a href="" class="pure-button">ワークフロー</a></li>
+			<li><a href="" class="pure-button">メール</a></li>
+			<li><a href="" class="pure-button">履歴</a></li>
+		</ul>
+	</div>
+
+</nav>
+
+<aside id="" style="border:1px solid #c0c0c0">
+	<h1>メニュー</h1>
+	<nav>
+		<dl>
+			<dt>コスト管理</dt>
+			<dd><a href="">製番管理</a></dd>
+			<dd><a href="">製番一覧</a></dd>
+			<dd><a href="">製番計画</a></dd>
+			<dd><a href="">製番管理</a></dd>
+		</dl>
+
+		<dl>
+			<dt>負荷管理</dt>
+			<dd><a href="">負荷山管理</a></dd>
+			<dd><a href="">負荷実績</a></dd>
+			<dd><a href="">負荷計画</a></dd>
+			<dd><a href="">非直課管理</a></dd>
+		</dl>
+
+	</nav>
+</aside>
+
+<main id="main-contents">
+<!--
+	一覧の場合
+-->
+	<div id="contents-controller">
+
+		<div class="l-float">
+			<div class="o-container">
+				<select name="kb_nendo" class="o-selectbox" title="年度選択">
+          <option></option>
+          <option>2023S</option>
+          <option>2023K</option>
+        </select>
+
+        <select name="cd_nendo" class="o-selectbox" title="部門選択">
+          <option></option>
+          <option>IJA02</option>
+          <option>IKA02</option>
+        </select>
+
+        <select name="dt_yymm" class="o-selectbox" title="年月選択">
+          <option></option>
+          <option>2310</option>
+          <option>2311</option>
+        </select>
+
+        <label><input type="checkbox" name="kb_resent">仕掛</label>
+
+      </div>
+		</div>
+	</div>
+
+	<div id="contents-container">
+		<div id="list-contents"></div>
+		<div id="pivot-contents"></div>
+		<div id="chart-contents"></div>
+	</div>
+
+<!--
+	編集の場合
+	wfのような特殊なものは個別
+-->
+	<div id="contents-container">
+		<form name="">
+				<legend>注番</legend>
+				<input type="text" name="no_cyu">
+
+				<legend>部門</legend>
+				<select name="cd_bumon_select"></select>
+				<input type="text" name="no_cyu" readonly>
+			
+		</form>
+	</div>
+
+</main>
+<footer></footer>
+
+<!--
+	一覧表
+-->
+<template id="list-contents-template">
+	<div id="list-controller">
+		<div id="contents-container">
+
+			<button name="list-boolmark-button" class="pure-button">ブックマーク</button>
+			<input name="list-filter">
+
+			<select name="ページサイズ"></select>
+			<div id="list-pager">
+				<div></div>
+			</div>
+
+		</div>
+	</div>
+	
+	<div id="list-entry"></div>
+
+</template>
+
+<!--
+	pivot
+-->
+<template id="pivot-contents-template">
+	<div id="pivot-controller">
+		<div id="contents-container">
+		</div>
+	</div>
+	
+	<div id="pivot-entry"></div>
+
+</template>
+
+<!--
+	chart
+-->
+<template id="chart-contents-template">
+	<div id="chart-controller">
+		<div id="contents-container">
+
+			<select name="chart-type"></select>
+			
+			
+			<button name="show-chart"></button>
+		</div>
+	</div>
+	
+	<div id="chart-entry"></div>
+
+</template>
+
+<!--
+	calendar
+-->
+<template id="calendar-contents-template">
+	<div id="calendar-controller">
+		<div id="contents-container">
+		</div>
+	</div>
+	
+	<div id="calendar-entry"></div>
+
+</template>
+
+<script src="js/list/main.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
