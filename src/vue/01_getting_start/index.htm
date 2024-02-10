@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<link rel="icon" href="favicon.png" size="any" />
+
+<!--
+CDN直接
+-->
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<!--
+<script defer src="test.js"></script>
+-->
+
+<title>test</title>
+
+</head>
+
+<body>
+
+<div id="app">{{ message }}</div>
+
+<script>
+
+//https://vuejs.org/guide/quick-start
+//CDN直接
+
+const {createApp} = Vue
+
+createApp({
+    data() {
+        return {
+            message: 'Hello Vue!'
+        }
+    }
+}).mount('#app')
+
+</script>
+
+</body>
+
+</html>
+

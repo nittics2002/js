@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<link rel="icon" href="favicon.png" size="any" />
+
+<!--
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+-->
+
+<title>test</title>
+
+</head>
+
+<body>
+
+<div id="app">
+    <div>カウント={{ count }}</div>
+    <button @click="count">カウントアップ</button>
+</div>
+
+<script type="module">
+
+//https://ja.vuejs.org/guide/essentials/application
+
+//ESモジュール利用
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+//モジュール分割
+import Component from './component.js'
+
+createApp(Component).mount('#app')
+
+</script>
+
+</body>
+
+</html>
+
