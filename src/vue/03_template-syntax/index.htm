@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<link rel="icon" href="favicon.png" size="any" />
+
+<!--
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+-->
+
+<title>test</title>
+
+<style>
+#sameName {
+    color:green;
+}
+
+#mltiAttrId {
+    color:red;
+}
+
+.mltiAttrClass {
+    background-color:cyan;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="app">
+    <div>カウント={{ count }}</div>
+    <button @click="count">カウントアップ</button>
+
+    <p>テキスト展開={{ rawHtml }}</p>
+    <p>v-html展開=<span v-html="rawHtml"></span></p>
+
+    <p v-bind:style="dynamicStyle">html属性を変数化する場合、v-bind:属性名="属性値"</p>
+    <p :style="dynamicStyle">省略記法では :属性名="属性値"</p>
+    <p :id>属性名とjs値が同じ場合、:属性名 だけでOK</p>
+
+    <ul>
+        <li><button :disabled="isButtonDisableFalse">属性 disabled=false は js変数=false</button></li>
+        <li><button :disabled="isButtonDisableTrue">属性 disabled=true は js変数=true</button></li>
+    </ul>
+
+    <p v-bind="multiAttrObj">v-bind="js_obj" とv-bindに引数なしでobj変数で複数一括指定できる<p>
+    
+    
+</div>
+
+<script type="module">
+
+//https://ja.vuejs.org/guide/essentials/application
+
+//ESモジュール利用
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+//モジュール分割
+import Component from './component.js'
+
+createApp(Component).mount('#app')
+
+</script>
+
+</body>
+
+</html>
+

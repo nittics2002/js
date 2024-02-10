@@ -12,13 +12,39 @@
 
 <title>test</title>
 
+<style>
+.cls-1 {
+    background-color:blue;
+}
+.cls-2 {
+    background-color:red;
+}
+
+</style>
+
 </head>
 
 <body>
 
 <div id="app">
-    <div>カウント={{ count }}</div>
-    <button @click="count">カウントアップ</button>
+
+    <p>単純な加算式={{ count + 2 }}</p>
+    
+    <p>3項判定={{ ok ? 'Yes' : 'No' }}</p>
+
+<!--
+    <p>文字列関数={{ url.split('/').reverse().join('\') }}</p>
+-->
+
+    <h6>文字列関数がうまく行かない</h6>
+    <p>{{ message.split('').reverse().join('') }}</p>
+
+    <p v-bind:class="`cls-${clsNo}`">テンプレート展開で属性値</p>
+
+    <p>{{ bindFunc() }}</p>
+
+
+    
 </div>
 
 <script type="module">
@@ -29,7 +55,7 @@
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
 //モジュール分割
-import Component from './component.js'
+import Component from './component2.js'
 
 createApp(Component).mount('#app')
 
