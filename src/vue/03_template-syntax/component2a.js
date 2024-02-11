@@ -21,11 +21,7 @@ export default {
             onClickSimpleSpel() {
                 this.simpleSpel="@click式"
             },
-            retActiveArg:'上の文字列をclickすると変わる',
-            activeArg:'click',
-            onActiveArg() {
-                this.retActiveArg='propがclickなので、clickになる'
-            },
+            
         }
     },
 }

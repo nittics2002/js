@@ -13,10 +13,6 @@
 <title>test</title>
 
 <style>
-h6 {
-    color:red
-}
-
 .cls-1 {
     background-color:blue;
 }
@@ -41,9 +37,7 @@ h6 {
 -->
 
     <h6>文字列関数がうまく行かない</h6>
-<!--
     <p>{{ message.split('').reverse().join('') }}</p>
--->
 
     <p v-bind:class="`cls-${clsNo}`">テンプレート展開で属性値</p>
 
@@ -55,15 +49,6 @@ h6 {
         <li><a @click="onClickSimpleSpel()">イベントsimpleSpel(click)</a></li>
         <li>{{ simpleSpel }}</li>
     </ul>
-
-
-    <h6>動的引数がうまく行かない</h6>
-<!--
-    <ul>
-        <li><a @[activeArg]="onActiveArg()">動的引数(click)</a></li>
-        <li>{{ retActiveArg }}</li>
-    </ul>
--->
 
     
 </div>
