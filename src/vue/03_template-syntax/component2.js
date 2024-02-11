@@ -22,7 +22,8 @@ export default {
                 this.simpleSpel="@click式"
             },
             retActiveArg:'上の文字列をclickすると変わる',
-            activeArg:'click',
+            //この動的引数のプロパティ名は全て小文字の制約がある
+            activearg:'click',
             onActiveArg() {
                 this.retActiveArg='propがclickなので、clickになる'
             },
