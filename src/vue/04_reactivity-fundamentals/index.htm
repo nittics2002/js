@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<link rel="icon" href="favicon.png" size="any" />
+
+<!--
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+-->
+
+<!--
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+-->
+
+<title>test</title>
+
+<style>
+#sameName {
+    color:green;
+}
+
+#mltiAttrId {
+    color:red;
+}
+
+.mltiAttrClass {
+    background-color:cyan;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="app">
+    <button @click="increment()">加算</button>
+
+    <p>カウント={{ count }}</p>
+
+    <ul v-for="item in list.items">
+        <li>{{ item }}</li>
+    </ul>
+    <p>nextTickでDOM更新と同期：{{ sync }}</p>
+
+    <button @click="clear()">delayクリア</button>
+
+    
+</div>
+
+<script type="module">
+
+//https://ja.vuejs.org/guide/essentials/reactivity-fundamentals
+
+//ESモジュール利用
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+//モジュール分割
+import Component from './component.js'
+
+createApp(Component).mount('#app')
+
+</script>
+
+</body>
+
+</html>
+

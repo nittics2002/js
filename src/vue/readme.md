@@ -1,15 +1,15 @@
 # Vue.js
 
-CompositionAPI+SFCで
+まずはOptionsAPIで
 
 --------------------------------------------------------------------------------
-## 240211
+## 240216
 
 ### https://ja.vuejs.org/guide/essentials/reactivity-fundamentals
 
-- CompositionAPI+SFCで
+- まずはOptionsAPIで
 
-
+- ステートフルなメソッド でlodashをimportしたいが、どうやる?
 
 
 ### https://ja.vuejs.org/guide/essentials/template-syntax
@@ -25,12 +25,13 @@ CompositionAPI+SFCで
     - ディレクティブの動的引数を指定するprop名は全て小文字の制限
         - DOMに展開されたとき、全て小文字になるため
     - 省略記法の為(例 v-bind:idが　:id )
-
+        - ただし、複数必要な場合があるので、
+- methodではvueがthisをbindするので、allow関数を使わない
 
 
 --------------------------------------------------------------------------------
 ## 資料
 
 [Docs](https://ja.vuejs.org/guide/introduction)
-
+[CDNでの例](https://qiita.com/aster-mnch/items/3e2cf8b77fe4eb9936e4)
 
