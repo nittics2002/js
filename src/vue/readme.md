@@ -11,7 +11,11 @@
 
 - ステートフルなメソッド でlodashをimportしたいが、どうやる?
 
-
+-04/component.js
+    - lodash.jsを使いたいがエラー
+        - Uncaught SyntaxError: ambiguous indirect export: lodash
+    - ステートフルなメソッドの動作が不明
+    
 ### https://ja.vuejs.org/guide/essentials/template-syntax
 
 - 03/index2.htm

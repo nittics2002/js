@@ -1,5 +1,8 @@
 import { nextTick } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
-import { lodash } from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
+
+//importできない
+//Uncaught SyntaxError: ambiguous indirect export: lodash
+//import { lodash } from 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm'
 
 export default {
     data() {
@@ -29,10 +32,15 @@ export default {
         this.increment()
     },
     created() {
-        this.clearClick = _.debounce(this.clear(), 1000)
+        //ステートフルなメソッド 
+        //lodashがimportできない
+        //this.clearClick = _.debounce(this.clear(), 1000)
+        //よくわからない
+        this.clearClick =　setTimeout(this.clear(), 2000)
     },
     unmounted() {
-        this.clearClick.cancel()
+        //lodashがimportできないので、_.debounceのcancel()は使えない
+        //this.clearClick.cancel()
     },
 }
 
