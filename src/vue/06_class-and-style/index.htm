@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<link rel="icon" href="favicon.png" size="any" />
+
+<!--
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+-->
+
+<title>test</title>
+
+<style>
+
+.bold {
+    font-weight:bold;
+}
+
+.active {
+    color:red;
+}
+
+.err {
+    background-color:blue;
+}
+
+.warn {
+    background-color:green;
+}
+
+
+
+
+</style>
+
+</head>
+
+<body>
+
+<div id="app">
+    <!-- 注意 {} であり　{{}} ではない  -->
+    <p class="bold" :class="{ active : isActive }">クラス属性の切り替え</p>
+    
+    <button @click="changeActive()">切り替え</button>
+
+    <p :class="classObject">objectで指定</p>
+
+    <p :class="computedClass">算出プロパティ</p>
+    
+    <p :class="[activeStr, errStr]">配列で指定</p>
+    
+    
+</div>
+
+<script type="module">
+
+//https://ja.vuejs.org/guide/essentials/class-and-style.html
+
+//ESモジュール利用
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+//モジュール分割
+import Component from './component.js'
+
+createApp(Component).mount('#app')
+
+</script>
+
+</body>
+
+</html>
+
