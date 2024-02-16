@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<link rel="icon" href="favicon.png" size="any" />
+
+<!--
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+-->
+
+<title>test</title>
+
+<style>
+#sameName {
+    color:green;
+}
+
+#mltiAttrId {
+    color:red;
+}
+
+.mltiAttrClass {
+    background-color:cyan;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="app">
+
+    <p>算出プロパティはリアクティブなデータを利用</p>
+    <p>キャッシュし、必要時に更新</p>
+    <p>{{ computedMessage }}</p>
+
+    <button @click="removeMessage()">削除</button>
+
+    <p>関数を使用する場合、実行毎に更新</p>
+    <p>{{ methodProp }}</p>
+
+    <button @click="changeProp()">切り替え</button>
+    <p>{{ settableProp }}</p>
+    
+</div>
+
+<script type="module">
+
+//https://ja.vuejs.org/guide/essentials/computed.html
+
+//ESモジュール利用
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+//モジュール分割
+import Component from './component.js'
+
+createApp(Component).mount('#app')
+
+</script>
+
+</body>
+
+</html>
+

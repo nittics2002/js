@@ -5,6 +5,12 @@
 --------------------------------------------------------------------------------
 ## 240216
 
+
+
+
+
+### https://ja.vuejs.org/guide/essentials/computed.html
+
 ### https://ja.vuejs.org/guide/essentials/reactivity-fundamentals
 
 - まずはOptionsAPIで
@@ -31,7 +37,8 @@
     - 省略記法の為(例 v-bind:idが　:id )
         - ただし、複数必要な場合があるので、
 - methodではvueがthisをbindするので、allow関数を使わない
-
+- 算出プロパティはリアクティブなデータを用いる
+    - computedで
 
 --------------------------------------------------------------------------------
 ## 資料
