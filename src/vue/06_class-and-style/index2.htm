@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<link rel="icon" href="favicon.png" size="any" />
+
+<!--
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+-->
+
+<title>test</title>
+
+<style>
+
+/*
+.bold {
+    font-weight:bold;
+}
+
+.red {
+    color:red;
+}
+
+.blue {
+    color:blue;
+}
+
+.bggreen {
+    background-color:green;
+}
+
+.bgcyan {
+    background-color:cyan;
+}
+*/
+
+</style>
+
+</head>
+
+<body>
+
+<div id="app">
+
+    <!--CSS名はcamelCaseを使う-->
+    <p :style="{color:activeColor, backgroundColor:gbColor}">CSS名はcamelCase</p>
+
+    <p :style="{'background-color':gbColor}">CSSのように"-"を使う場合''で囲う</p>
+
+    <p :style="styleObject">object指定</p>
+
+    <p :style="[styleObject, styleOverlay]">array[]でobjectを指定してマージ</p>
+    
+</div>
+
+<script type="module">
+
+//https://ja.vuejs.org/guide/essentials/class-and-style.html
+
+//ESモジュール利用
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+//モジュール分割
+import Component from './component2.js'
+
+createApp(Component).mount('#app')
+
+</script>
+
+</body>
+
+</html>
+

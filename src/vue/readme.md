@@ -9,9 +9,6 @@
 
 - "コンポーネントでの使用” の部分は後日
 
-
-
-
 ### https://ja.vuejs.org/guide/essentials/computed.html
 
 ### https://ja.vuejs.org/guide/essentials/reactivity-fundamentals
@@ -42,6 +39,12 @@
 - methodではvueがthisをbindするので、allow関数を使わない
 - 算出プロパティはリアクティブなデータを用いる
     - computedで
+- :styleではjavascriptに従いcss名はcamelCase
+    - {backgroundColor:bgColor}
+    - ハイフンを使いたい場合''で囲う ex) {'background-color':bgColor}
+    
+
+
 
 --------------------------------------------------------------------------------
 ## 資料
