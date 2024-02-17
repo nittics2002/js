@@ -1,12 +1,19 @@
-# Vue.js
+# Vue3.js
 
 まずはOptionsAPIで
 
 --------------------------------------------------------------------------------
-## 240216
+## 作業 240217
+
+
+### https://ja.vuejs.org/guide/essentials/list.html
+
+- key による状態管理から
+
+
+- v-for of 式の使い方が不明
 
 ### https://ja.vuejs.org/guide/essentials/conditional.html
-
 
 ### https://ja.vuejs.org/guide/essentials/class-and-style.html
 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<link rel="icon" href="favicon.png" size="any" />
+
+<!--
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+-->
+
+<title>test</title>
+
+<style>
+
+.bold {
+    font-weight:bold;
+}
+
+.active {
+    color:red;
+}
+
+.err {
+    background-color:blue;
+}
+
+.warn {
+    background-color:green;
+}
+
+
+
+
+</style>
+
+</head>
+
+<body>
+
+<div id="app">
+
+    <p>単純リスト</p>
+    <ul>
+        <li v-for="item in simples">{{ item.message }}</li>
+    </ul>
+
+    <p>他のデータへのアクセスも可能</p>
+    <ul>
+        <li v-for="item in hasParent.childs">
+            祖先:{{ ancestor }} 親:{{ hasParent.parentStr }} 子供:{{ item.message }}
+        </li>
+    </ul>
+
+    <p>forEachと同じシグネチャでindexも取得できる</p>
+    <ul>
+        <li v-for="(item,index) in simples">index={{ index }}:{{ item.message }}</li>
+    </ul>
+    
+    <p>v-forで"{message} in items"とするとitem.messageでなくmessageと書ける</p>
+    <ul>
+        <li v-for="{message} in simples">{{ message }}</li>
+    </ul>
+    
+</div>
+
+<script type="module">
+
+//https://ja.vuejs.org/guide/essentials/list.html
+
+//ESモジュール利用
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+//モジュール分割
+import Component from './component.js'
+
+createApp(Component).mount('#app')
+
+</script>
+
+</body>
+
+</html>
+
