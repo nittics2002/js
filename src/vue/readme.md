@@ -5,6 +5,9 @@
 --------------------------------------------------------------------------------
 ## 240216
 
+### https://ja.vuejs.org/guide/essentials/conditional.html
+
+
 ### https://ja.vuejs.org/guide/essentials/class-and-style.html
 
 - "コンポーネントでの使用” の部分は後日
@@ -42,8 +45,9 @@
 - :styleではjavascriptに従いcss名はcamelCase
     - {backgroundColor:bgColor}
     - ハイフンを使いたい場合''で囲う ex) {'background-color':bgColor}
-    
-
+- 複数要素をまとめてif構文する場合、template要素で囲う
+- v-ifは要素が消えるが、v-showはCSS display:none
+    - DOCSに頻繁に切り替える場合v-showのほうが良いとの事
 
 
 --------------------------------------------------------------------------------

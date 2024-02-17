@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<link rel="icon" href="favicon.png" size="any" />
+
+<!--
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+-->
+
+<title>test</title>
+
+<style>
+
+.bold {
+    font-weight:bold;
+}
+
+.active {
+    color:red;
+}
+
+.err {
+    background-color:blue;
+}
+
+.warn {
+    background-color:green;
+}
+
+
+
+
+</style>
+
+</head>
+
+<body>
+
+<div id="app">
+
+    <ul>
+        <li v-if="no === 1">条件1</li>
+        <li v-else-if="no === 2">条件2</li>
+        <li v-else>条件3</li>
+    </ul>
+    <button @click="onChangeNo()">条件変更</button>
+
+    <template v-if="showMultiElement">
+        <p>複数要素を対象とする場合</p>
+        <p>template要素で囲う</p>
+        <p>条件不成立で要素はDOMから削除される</p>
+
+    </template>
+
+    <button @click="onChangeMultiElement()">条件変更</button>
+
+    <p v-show="show">v-showを使うと要素はDOMに残る(CSS display:none)</p>
+
+    <button @click="onChangeShow()">条件変更</button>
+
+
+    
+    
+</div>
+
+<script type="module">
+
+//https://ja.vuejs.org/guide/essentials/conditional.html
+
+//ESモジュール利用
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+//モジュール分割
+import Component from './component.js'
+
+createApp(Component).mount('#app')
+
+</script>
+
+</body>
+
+</html>
+
