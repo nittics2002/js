@@ -5,8 +5,12 @@
 --------------------------------------------------------------------------------
 ## 作業 240222
 
+### https://ja.vuejs.org/guide/essentials/forms.html
+
+
 ### https://ja.vuejs.org/guide/essentials/event-handling.html
 
+- イベントは色々あるので、ユースケースで再確認
 
 ### https://ja.vuejs.org/guide/essentials/list.html
 
