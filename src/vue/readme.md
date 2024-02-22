@@ -3,13 +3,17 @@
 まずはOptionsAPIで
 
 --------------------------------------------------------------------------------
-## 作業 240217
+## 作業 240222
+
+### https://ja.vuejs.org/guide/essentials/event-handling.html
 
 
 ### https://ja.vuejs.org/guide/essentials/list.html
 
-- key による状態管理から
+- "コv-for をコンポーネントに適用する” の部分は後日
 
+- 08/index3.htm
+    v-forに:key属性をつけたが、効果は?
 
 - v-for of 式の使い方が不明
 
@@ -49,13 +53,15 @@
 - methodではvueがthisをbindするので、allow関数を使わない
 - 算出プロパティはリアクティブなデータを用いる
     - computedで
+- 算出プロパティでのgetter内でのsort(),reverse()は、配列のコピーを使う
+    - return [...originalArray].sort()
 - :styleではjavascriptに従いcss名はcamelCase
     - {backgroundColor:bgColor}
     - ハイフンを使いたい場合''で囲う ex) {'background-color':bgColor}
 - 複数要素をまとめてif構文する場合、template要素で囲う
 - v-ifは要素が消えるが、v-showはCSS display:none
     - DOCSに頻繁に切り替える場合v-showのほうが良いとの事
-
+- v-forは:key属性ありが推奨
 
 --------------------------------------------------------------------------------
 ## 資料
