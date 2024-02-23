@@ -21,33 +21,90 @@
 
 <div id="app">
 
-    <p>インラインハンドラーは直接@clickで処理を書く</p>
-    <p @click="count++">ここをクリックする 回数:{{ count }}</p>
+    <form name="">
+        <p>v-modelでtext入力したvalueに連動:{{ message }}</p>
+        <input v-model="message">
 
-    <p>メソッドハンドラーはmethodを利用する</p>
-    <p @click="counterUp">ここをクリックする 回数:{{ count }}</p>
+        <p>IME入力に連動は@inputと:valueで:{{ ime_message }}</p>
+        <input @input="connectIme($event)" :value="ime_message">
 
-    <p>DOM Eventの取得は$event変数(インラインでは$無し)で取得</p>
-    <p @click="getDomId('my message',$event)" id="dom-id">
-        ここをクリックする ID:{{ domId }} message:{{ message }}
-    </p>
-    
-    <p>submitだがイベント修飾子prevent(event.preventDefault)でリロード防止</p>
-    <button type="submit" @click.prevent="submitCountUp">カウント:{{ submitCounter }}</button>
+        <p>v-model.lazyでchangeイベントに連動:{{ change_message }}</p>
+        <input v-model.lazy="change_message">
 
-    <p>キーイベント enterキーがupしたとき</p>
-    <input type="text" @keyup.enter="enterKeyUp" placeholder="ここでEnter入力">{{ enterKey }}</p>
 
-    <p>ctrlキーを押しながらclick</p>
-    <p @click.ctrl="ctrlClickCountUp">ここをクリックした:{{ ctrlClickCount }}</p>
 
-    
+
+        <p>
+            textarea
+            {{ multilines }}
+        </p>
+        <textarea v-model="multilines"></textarea>
+
+        <p>チェックボックスはtrue/falseになる:{{ chk }}</p>
+        <label><input type="checkbox" v-model="chk"></input>ON/OFF</label>
+
+        <p>複数の場合にvalueを配列で取得する:{{ chk_list }}</p>
+        <label><input type="checkbox" v-model="chk_list" value="aoki"></input>青木</label>
+        <label><input type="checkbox" v-model="chk_list" value="ito"></input>伊藤</label>
+        <label><input type="checkbox" v-model="chk_list" value="ukai"></input>鵜飼</label>
+
+        <p>配列にすればvalueを取得できる:{{ chk_single }}</p>
+        <label><input type="checkbox" v-model="chk_single" value="ONしました"></input>ON/OFF</label>
+
+        <p>true-valueとfalse-valueの値を取得:{{ chk_string }}</p>
+        <label><input type="checkbox" true-value="ONしました" false-value="OFFです" v-model="chk_string" value="ONしました"></input>ON/OFF</label>
+
+        <p>:true-valueと:false-value属性でプロパティ値を取得:{{ chk_poop }}</p>
+        <label><input type="checkbox" :true-value="chk_poop_true" :false-value="chk_poop_false" v-model="chk_poop" value="ONしました"></input>ON/OFF</label>
+
+        <p>radioはvalueを取得:{{ radio_val }}</p>
+        <label><input type="radio" v-model="radio_val" value="aoki"></input>青木</label>
+        <label><input type="radio" v-model="radio_val" value="ito"></input>伊藤</label>
+        <label><input type="radio" v-model="radio_val" value="ukai"></input>鵜飼</label>
+
+        <p>radioの:value属性でプロパティ値を取得:{{ radio_attr }}</p>
+        <label><input type="radio" v-model="radio_attr" :value="radio_attr1"></input>青木</label>
+        <label><input type="radio" v-model="radio_attr" :value="radio_attr2"></input>伊藤</label>
+        <label><input type="radio" v-model="radio_attr" :value="radio_attr3"></input>鵜飼</label>
+
+        <p>selectbox:{{ sel_val }}</p>
+        <select v-model="sel_val">
+            <option value="disabled">未選択</option>
+            <option value="aoki">青木</option>
+            <option value="ito">伊藤</option>
+            <option value="ukai">鵜飼</option>
+        </select>
+
+        <p>disabledオプションで初期値に選択なし状態を表示:{{ disabled_sel_val }}</p>
+        <select v-model="disabled_sel_val">
+            <option disabled value="disabled">未選択</option>
+            <option value="aoki">青木</option>
+            <option value="ito">伊藤</option>
+            <option value="ukai">鵜飼</option>
+        </select>
+
+        <p>複数選択:{{ multi_sel_val }}</p>
+        <select v-model="multi_sel_val" multiple>
+            <option value="disabled">未選択</option>
+            <option value="aoki">青木</option>
+            <option value="ito">伊藤</option>
+            <option value="ukai">鵜飼</option>
+        </select>
+
+        <p>v-forで配列データを使用:{{ selected_list }}</p>
+        <select v-model="selected_list">
+            <option v-for="list in sel_list" :value="list.val">{{ list.text}}</option>
+        </select>
+        
+    </form>
+
+    <footer style="min-height:200px;"></footer>
     
 </div>
 
 <script type="module">
 
-//https://ja.vuejs.org/guide/essentials/event-handling.html
+//https://ja.vuejs.org/guide/essentials/forms
 
 //ESモジュール利用
 import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'

@@ -2,31 +2,38 @@
 export default {
     data() {
         return {
-            count:0,
-            domId:'',
             message:'',
-            submitCounter:0,
-            enterKey:'まだ',
-            ctrlClickCount:0
+            ime_message:'',
+            change_message:'',
+            multilines:'',
+            chk:false,
+            chk_list:[],
+            chk_single:[],
+            chk_string:'',
+            chk_poop:'',
+            chk_poop_true:'trueです',
+            chk_poop_false:'falseです',
+            radio_val:'',
+            radio_attr:'',
+            radio_attr1:'ラジオ1',
+            radio_attr2:'ラジオ2',
+            radio_attr3:'ラジオ3',
+            sel_val:'',
+            disabled_sel_val:'',
+            multi_sel_val:[],
+            selected_list:'',
+            sel_list:[
+                {val:'aoki', text:'青木'},
+                {val:'ito', text:'伊藤'},
+                {val:'ukai', text:'鵜飼'},
+            ],
        }
     },
+    computed:{
+    },
     methods:{
-        counterUp() {
-            this.count++
-        },
-        getDomId(message, event) {
-            this.message = message
-            this.domId = event.target.id
-        },
-        submitCountUp() {
-            this.submitCounter++
-        },
-        enterKeyUp() {
-            this.enterKey = this.enterKey === 'まだ'?
-                '押した':'まだ'
-        },
-        ctrlClickCountUp() {
-            this.ctrlClickCount++
+        connectIme(event) {
+            this.ime_message = event.target.value
         },
     },
 }
