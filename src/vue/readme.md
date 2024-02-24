@@ -5,6 +5,10 @@
 --------------------------------------------------------------------------------
 ## 作業 240222
 
+### https://ja.vuejs.org/guide/essentials/watchers.html
+
+- 基本動作以外は後日
+
 ### https://ja.vuejs.org/guide/essentials/lifecycle.html
 
 ### https://ja.vuejs.org/guide/essentials/forms.html
@@ -67,6 +71,13 @@
 - v-ifは要素が消えるが、v-showはCSS display:none
     - DOCSに頻繁に切り替える場合v-showのほうが良いとの事
 - v-forは:key属性ありが推奨
+- ライフサイクルのフックmounted()等は、()を忘れずに
+- watchとcomputedの使い分け(watchを使う例)
+    - ajaxのようなデータを監視し、変更があったら処理する場合
+    - property値を変更しない場合
+    - 初期ロード時の処理が不要or処理したくない場合
+
+
 
 --------------------------------------------------------------------------------
 ## 資料
