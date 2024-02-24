@@ -5,8 +5,9 @@
 --------------------------------------------------------------------------------
 ## 作業 240222
 
-### https://ja.vuejs.org/guide/essentials/forms.html
+### https://ja.vuejs.org/guide/essentials/lifecycle.html
 
+### https://ja.vuejs.org/guide/essentials/forms.html
 
 ### https://ja.vuejs.org/guide/essentials/event-handling.html
 
