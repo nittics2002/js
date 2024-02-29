@@ -3,7 +3,11 @@
 まずはOptionsAPIで
 
 --------------------------------------------------------------------------------
-## 作業 240222
+## 作業 240301
+
+### https://ja.vuejs.org/guide/essentials/  .html
+
+- 関数を使った参照 以降は後日
 
 ### https://ja.vuejs.org/guide/essentials/watchers.html
 
